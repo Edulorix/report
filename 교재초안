@@ -1,0 +1,2080 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI 활용 역량 강화 중급 과정 개발 프로젝트 — 교재 개요·목차 자동 생성기</title>
+
+<style>
+:root{
+  --bg:#f3f6fb;
+  --paper:#ffffff;
+  --text:#111827;
+  --text2:#334155;
+  --text3:#475569;
+  --muted:#64748b;
+  --line:#dbe3ec;
+  --navy:#0f172a;
+  --blue:#1d4ed8;
+  --indigo:#4f46e5;
+  --green:#047857;
+  --amber:#b45309;
+  --red:#b91c1c;
+  --shadow:0 16px 40px rgba(15,23,42,.09);
+  --shadow2:0 6px 18px rgba(15,23,42,.06);
+  --font:"Malgun Gothic","맑은 고딕",Arial,sans-serif;
+}
+
+*{box-sizing:border-box}
+
+html,body{
+  margin:0;
+  padding:0;
+}
+
+body{
+  min-height:100vh;
+  font-family:var(--font);
+  color:var(--text);
+  background:
+    radial-gradient(circle at 0% 0%,rgba(37,99,235,.08),transparent 28%),
+    radial-gradient(circle at 100% 0%,rgba(79,70,229,.07),transparent 24%),
+    linear-gradient(180deg,#f8fbff 0%,#f3f6fb 100%);
+}
+
+button,textarea{
+  font-family:var(--font);
+}
+
+.app{
+  max-width:1560px;
+  margin:0 auto;
+  padding:28px;
+}
+
+.header{
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-end;
+  gap:24px;
+  margin-bottom:24px;
+}
+
+.header-left{
+  max-width:1040px;
+}
+
+.badge{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  padding:8px 13px;
+  border-radius:999px;
+  background:#eef2ff;
+  border:1px solid #dbeafe;
+  color:#3730a3;
+  font-size:12px;
+  font-weight:900;
+  letter-spacing:.04em;
+}
+
+.badge-dot{
+  width:8px;
+  height:8px;
+  border-radius:50%;
+  background:linear-gradient(135deg,#1d4ed8,#4f46e5);
+}
+
+.header h1{
+  margin:14px 0 8px;
+  font-size:34px;
+  line-height:1.18;
+  letter-spacing:-.04em;
+  word-break:keep-all;
+}
+
+.header p{
+  margin:0;
+  color:var(--muted);
+  font-size:14px;
+  line-height:1.85;
+  word-break:keep-all;
+}
+
+.header-actions{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+  justify-content:flex-end;
+}
+
+.layout{
+  display:grid;
+  grid-template-columns:480px 1fr;
+  gap:22px;
+  align-items:start;
+}
+
+@media(max-width:1280px){
+  .header{
+    flex-direction:column;
+    align-items:flex-start;
+  }
+
+  .header-actions{
+    justify-content:flex-start;
+  }
+
+  .layout{
+    grid-template-columns:1fr;
+  }
+}
+
+.panel{
+  background:rgba(255,255,255,.92);
+  border:1px solid rgba(255,255,255,.9);
+  border-radius:28px;
+  box-shadow:var(--shadow);
+  overflow:hidden;
+}
+
+.panel-head{
+  display:flex;
+  justify-content:space-between;
+  gap:16px;
+  align-items:flex-start;
+  padding:22px 24px 18px;
+  border-bottom:1px solid var(--line);
+  background:linear-gradient(180deg,#ffffff,#f9fbff);
+}
+
+.panel-head h2{
+  margin:0;
+  font-size:19px;
+  letter-spacing:-.02em;
+}
+
+.panel-head p{
+  margin:6px 0 0;
+  color:var(--muted);
+  font-size:13px;
+  line-height:1.75;
+}
+
+.panel-body{
+  padding:22px 24px 24px;
+}
+
+.memo-box{
+  width:100%;
+  min-height:560px;
+  resize:vertical;
+  border:1px solid var(--line);
+  border-radius:18px;
+  background:#fff;
+  padding:16px 17px;
+  color:var(--text);
+  font-size:14px;
+  line-height:1.85;
+  outline:none;
+}
+
+.memo-box:focus{
+  border-color:#93c5fd;
+  box-shadow:0 0 0 4px rgba(37,99,235,.12);
+}
+
+.memo-box::placeholder{
+  color:#94a3b8;
+}
+
+.tip{
+  margin-top:12px;
+  padding:15px 16px;
+  border:1px solid var(--line);
+  border-radius:18px;
+  background:linear-gradient(180deg,#ffffff,#f9fbff);
+}
+
+.tip strong{
+  display:block;
+  margin-bottom:7px;
+  color:var(--text2);
+  font-size:13px;
+}
+
+.tip ul{
+  margin:0 0 0 18px;
+  padding:0;
+  color:var(--muted);
+  font-size:12px;
+  line-height:1.9;
+}
+
+.actions{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:12px;
+  flex-wrap:wrap;
+  margin-top:20px;
+  padding-top:18px;
+  border-top:1px dashed var(--line);
+}
+
+.btn-row,
+.toolbar{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+}
+
+.btn{
+  border:none;
+  border-radius:14px;
+  padding:12px 16px;
+  font-size:14px;
+  font-weight:900;
+  cursor:pointer;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:8px;
+  transition:.18s ease;
+  white-space:nowrap;
+}
+
+.btn:hover{
+  transform:translateY(-1px);
+}
+
+.btn.primary{
+  color:#fff;
+  background:linear-gradient(135deg,#0f172a,#1e3a8a);
+  box-shadow:0 10px 24px rgba(15,23,42,.18);
+}
+
+.btn.sub{
+  color:var(--text);
+  background:#fff;
+  border:1px solid var(--line);
+}
+
+.btn.ghost{
+  color:var(--muted);
+  background:transparent;
+  border:1px dashed var(--line);
+}
+
+.preview-wrap{
+  padding:22px;
+  background:linear-gradient(180deg,rgba(255,255,255,.9),rgba(255,255,255,.98));
+}
+
+.empty{
+  min-height:1020px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  border:1px dashed var(--line);
+  border-radius:28px;
+  background:#fff;
+  color:var(--muted);
+}
+
+.empty-inner{
+  max-width:650px;
+  padding:34px 22px;
+}
+
+.empty h3{
+  margin:0 0 10px;
+  color:var(--text);
+  font-size:24px;
+  letter-spacing:-.03em;
+}
+
+.empty p{
+  margin:0;
+  font-size:14px;
+  line-height:1.9;
+}
+
+.doc{
+  background:#fff;
+  border:1px solid var(--line);
+  border-radius:30px;
+  overflow:hidden;
+  box-shadow:var(--shadow);
+}
+
+.doc-cover{
+  position:relative;
+  padding:40px 38px 34px;
+  color:#fff;
+  background:linear-gradient(135deg,#0f172a 0%,#132554 45%,#1e3a8a 100%);
+  overflow:hidden;
+}
+
+.doc-cover::before{
+  content:"";
+  position:absolute;
+  right:-90px;
+  top:-90px;
+  width:320px;
+  height:320px;
+  border-radius:50%;
+  background:radial-gradient(circle,rgba(255,255,255,.16),transparent 70%);
+}
+
+.doc-cover::after{
+  content:"";
+  position:absolute;
+  left:-80px;
+  bottom:-100px;
+  width:300px;
+  height:300px;
+  border-radius:50%;
+  background:radial-gradient(circle,rgba(96,165,250,.24),transparent 72%);
+}
+
+.doc-cover > *{
+  position:relative;
+  z-index:1;
+}
+
+.doc-type{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  padding:8px 12px;
+  border-radius:999px;
+  background:rgba(255,255,255,.09);
+  border:1px solid rgba(255,255,255,.14);
+  color:#dbeafe;
+  font-size:12px;
+  font-weight:900;
+  letter-spacing:.05em;
+  margin-bottom:18px;
+}
+
+.doc-title{
+  margin:0 0 12px;
+  font-size:32px;
+  line-height:1.25;
+  letter-spacing:-.04em;
+  max-width:1080px;
+  word-break:keep-all;
+}
+
+.doc-sub{
+  margin:0 0 22px;
+  max-width:1040px;
+  color:rgba(255,255,255,.9);
+  font-size:14px;
+  line-height:1.9;
+}
+
+.meta{
+  display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));
+  gap:12px;
+}
+
+@media(max-width:980px){
+  .meta{
+    grid-template-columns:repeat(2,minmax(0,1fr));
+  }
+}
+
+.meta-box{
+  min-height:90px;
+  padding:14px 16px;
+  border-radius:18px;
+  background:rgba(255,255,255,.08);
+  border:1px solid rgba(255,255,255,.13);
+}
+
+.meta-label{
+  margin-bottom:8px;
+  color:rgba(255,255,255,.68);
+  font-size:11px;
+  font-weight:900;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+}
+
+.meta-value{
+  color:#fff;
+  font-size:14px;
+  line-height:1.7;
+  font-weight:700;
+  word-break:keep-all;
+}
+
+.doc-body{
+  padding:30px 32px 34px;
+  background:linear-gradient(180deg,#ffffff 0%,#fcfdff 100%);
+}
+
+.summary-zone{
+  display:grid;
+  grid-template-columns:1.25fr .85fr;
+  gap:16px;
+  margin-bottom:18px;
+}
+
+@media(max-width:1120px){
+  .summary-zone{
+    grid-template-columns:1fr;
+  }
+}
+
+.main-summary,
+.side-box,
+.section-box,
+.metric,
+.toc-card,
+.output-card{
+  background:#fff;
+  border:1px solid var(--line);
+  border-radius:24px;
+  box-shadow:var(--shadow2);
+}
+
+.main-summary{
+  padding:24px 24px 20px;
+  background:linear-gradient(180deg,#ffffff,#fbfdff);
+}
+
+.eyebrow{
+  margin-bottom:10px;
+  color:var(--blue);
+  font-size:12px;
+  font-weight:900;
+  letter-spacing:.06em;
+}
+
+.main-summary h2{
+  margin:0 0 12px;
+  font-size:23px;
+  line-height:1.42;
+  letter-spacing:-.03em;
+  word-break:keep-all;
+}
+
+.main-summary p{
+  margin:0;
+  color:var(--text2);
+  font-size:14px;
+  line-height:1.92;
+  white-space:pre-wrap;
+}
+
+.side-stack{
+  display:grid;
+  gap:16px;
+}
+
+.side-box{
+  padding:18px;
+}
+
+.side-box h4{
+  margin:0 0 10px;
+  font-size:15px;
+}
+
+.signal-list{
+  display:grid;
+  gap:10px;
+}
+
+.signal{
+  padding:14px;
+  border-radius:17px;
+  border:1px solid var(--line);
+  background:linear-gradient(180deg,#ffffff,#fbfdff);
+}
+
+.signal.good{
+  border-color:#ccefdc;
+  background:linear-gradient(180deg,#f4fdf8,#ffffff);
+}
+
+.signal.info{
+  border-color:#bfdbfe;
+  background:linear-gradient(180deg,#eff6ff,#ffffff);
+}
+
+.signal.warn{
+  border-color:#fde7b0;
+  background:linear-gradient(180deg,#fffaf0,#ffffff);
+}
+
+.signal.risk{
+  border-color:#fecaca;
+  background:linear-gradient(180deg,#fff5f5,#ffffff);
+}
+
+.signal-title{
+  margin-bottom:7px;
+  font-size:12px;
+  font-weight:900;
+  letter-spacing:.05em;
+}
+
+.signal.good .signal-title{color:var(--green)}
+.signal.info .signal-title{color:var(--blue)}
+.signal.warn .signal-title{color:var(--amber)}
+.signal.risk .signal-title{color:var(--red)}
+
+.signal-text{
+  color:var(--text2);
+  font-size:14px;
+  line-height:1.88;
+  font-weight:700;
+  word-break:keep-all;
+  white-space:pre-wrap;
+}
+
+.metric-grid{
+  display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));
+  gap:14px;
+  margin-bottom:18px;
+}
+
+@media(max-width:980px){
+  .metric-grid{
+    grid-template-columns:repeat(2,minmax(0,1fr));
+  }
+}
+
+.metric{
+  padding:17px;
+  background:linear-gradient(180deg,#ffffff,#fbfdff);
+}
+
+.metric-label{
+  margin-bottom:9px;
+  color:var(--muted);
+  font-size:12px;
+  font-weight:800;
+}
+
+.metric-value{
+  margin-bottom:8px;
+  color:var(--text);
+  font-size:30px;
+  font-weight:900;
+  letter-spacing:-.04em;
+}
+
+.metric-sub{
+  color:var(--text3);
+  font-size:12px;
+  line-height:1.7;
+}
+
+.section{
+  margin-top:22px;
+}
+
+.section-head{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:14px;
+  margin-bottom:12px;
+  flex-wrap:wrap;
+}
+
+.section-head h3{
+  margin:0;
+  font-size:19px;
+  letter-spacing:-.02em;
+}
+
+.section-tag{
+  display:inline-flex;
+  align-items:center;
+  padding:7px 12px;
+  border-radius:999px;
+  background:#f8fafc;
+  border:1px solid var(--line);
+  color:var(--text3);
+  font-size:12px;
+  font-weight:900;
+}
+
+.section-box{
+  padding:18px;
+}
+
+.columns{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:16px;
+}
+
+@media(max-width:980px){
+  .columns{
+    grid-template-columns:1fr;
+  }
+}
+
+.list{
+  list-style:none;
+  margin:0;
+  padding:0;
+  display:grid;
+  gap:10px;
+}
+
+.list-item{
+  display:grid;
+  grid-template-columns:30px 1fr;
+  gap:12px;
+  padding:14px;
+  border:1px solid var(--line);
+  border-radius:17px;
+  background:linear-gradient(180deg,#ffffff,#fbfdff);
+}
+
+.list-no{
+  width:30px;
+  height:30px;
+  border-radius:11px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:linear-gradient(135deg,#1e3a8a,#4f46e5);
+  color:#fff;
+  font-size:12px;
+  font-weight:900;
+}
+
+.list-body{
+  color:var(--text2);
+  font-size:14px;
+  line-height:1.9;
+  font-weight:700;
+  word-break:keep-all;
+}
+
+.toc-grid{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:14px;
+}
+
+@media(max-width:980px){
+  .toc-grid{
+    grid-template-columns:1fr;
+  }
+}
+
+.toc-card{
+  overflow:hidden;
+}
+
+.toc-head{
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-start;
+  gap:12px;
+  padding:17px 17px 13px;
+  border-bottom:1px solid var(--line);
+  background:linear-gradient(180deg,#ffffff,#fbfdff);
+}
+
+.session-pill{
+  display:inline-flex;
+  padding:6px 10px;
+  border-radius:999px;
+  background:#eff6ff;
+  border:1px solid #dbeafe;
+  color:#1d4ed8;
+  font-size:12px;
+  font-weight:900;
+  margin-bottom:8px;
+}
+
+.toc-head h4{
+  margin:0;
+  font-size:16px;
+  line-height:1.45;
+  letter-spacing:-.02em;
+  word-break:keep-all;
+}
+
+.time-pill{
+  flex:0 0 auto;
+  display:inline-flex;
+  padding:8px 10px;
+  border-radius:12px;
+  background:#f8fafc;
+  border:1px solid var(--line);
+  color:var(--text3);
+  font-size:12px;
+  font-weight:900;
+}
+
+.toc-body{
+  padding:17px;
+}
+
+.toc-body dl{
+  margin:0;
+  display:grid;
+  gap:12px;
+}
+
+.toc-body dt{
+  margin:0 0 4px;
+  color:var(--muted);
+  font-size:12px;
+  font-weight:900;
+}
+
+.toc-body dd{
+  margin:0;
+  color:var(--text2);
+  font-size:13px;
+  line-height:1.75;
+  font-weight:700;
+  word-break:keep-all;
+}
+
+.output-grid{
+  display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));
+  gap:14px;
+}
+
+@media(max-width:1120px){
+  .output-grid{
+    grid-template-columns:repeat(2,minmax(0,1fr));
+  }
+}
+
+@media(max-width:640px){
+  .output-grid{
+    grid-template-columns:1fr;
+  }
+}
+
+.output-card{
+  padding:17px;
+  background:linear-gradient(180deg,#ffffff,#fbfdff);
+}
+
+.output-icon{
+  width:44px;
+  height:44px;
+  border-radius:16px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  margin-bottom:10px;
+  color:#fff;
+  font-weight:900;
+  background:linear-gradient(135deg,#1d4ed8,#4f46e5);
+}
+
+.output-card h4{
+  margin:0 0 8px;
+  font-size:15px;
+}
+
+.output-card p{
+  margin:0;
+  color:var(--text3);
+  font-size:13px;
+  line-height:1.75;
+  word-break:keep-all;
+}
+
+.table-wrap{
+  overflow:auto;
+  border:1px solid var(--line);
+  border-radius:22px;
+  background:#fff;
+  box-shadow:var(--shadow2);
+}
+
+table{
+  width:100%;
+  border-collapse:separate;
+  border-spacing:0;
+}
+
+.report-table thead th{
+  background:linear-gradient(180deg,#0f172a,#1e293b);
+  color:#fff;
+  text-align:left;
+  padding:14px;
+  font-size:12px;
+  font-weight:900;
+  letter-spacing:.05em;
+  white-space:nowrap;
+}
+
+.report-table tbody td{
+  padding:14px;
+  border-bottom:1px solid var(--line);
+  color:var(--text2);
+  font-size:13px;
+  line-height:1.75;
+  vertical-align:top;
+  background:#fff;
+}
+
+.report-table tbody tr:nth-child(even) td{
+  background:#fcfdff;
+}
+
+.report-table tbody tr:last-child td{
+  border-bottom:none;
+}
+
+.pill{
+  display:inline-flex;
+  align-items:center;
+  padding:6px 10px;
+  border-radius:999px;
+  font-size:12px;
+  font-weight:900;
+  white-space:nowrap;
+}
+
+.pill.blue{background:#eff6ff;color:#1d4ed8;border:1px solid #dbeafe}
+.pill.green{background:#ecfdf5;color:#059669;border:1px solid #d1fae5}
+.pill.amber{background:#fff7ed;color:#d97706;border:1px solid #fed7aa}
+.pill.purple{background:#f5f3ff;color:#6d28d9;border:1px solid #ddd6fe}
+
+details{
+  border:1px solid var(--line);
+  background:#fff;
+  border-radius:20px;
+  overflow:hidden;
+  box-shadow:var(--shadow2);
+}
+
+summary{
+  list-style:none;
+  cursor:pointer;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:10px;
+  padding:16px 18px;
+  color:var(--text);
+  font-size:14px;
+  font-weight:900;
+}
+
+summary::-webkit-details-marker{
+  display:none;
+}
+
+.details-body{
+  border-top:1px solid var(--line);
+  padding:16px 18px 18px;
+  color:var(--text2);
+  font-size:14px;
+  line-height:1.95;
+  white-space:pre-wrap;
+  word-break:keep-all;
+}
+
+.footer-note{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:12px;
+  flex-wrap:wrap;
+  margin-top:14px;
+  color:var(--muted);
+  font-size:12px;
+}
+
+.toast-wrap{
+  position:fixed;
+  top:20px;
+  right:20px;
+  z-index:10000;
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+}
+
+.toast{
+  padding:12px 14px;
+  border-radius:14px;
+  color:#fff;
+  background:#0f172a;
+  box-shadow:var(--shadow);
+  font-size:13px;
+  font-weight:800;
+}
+
+.toast.good{background:#065f46}
+.toast.warn{background:#92400e}
+.toast.bad{background:#991b1b}
+
+.processing{
+  position:fixed;
+  inset:0;
+  background:rgba(244,247,251,.84);
+  backdrop-filter:blur(10px);
+  display:none;
+  align-items:center;
+  justify-content:center;
+  z-index:9999;
+}
+
+.processing.show{
+  display:flex;
+}
+
+.processing-card{
+  width:min(620px,calc(100vw - 40px));
+  padding:30px;
+  border-radius:26px;
+  background:#fff;
+  border:1px solid var(--line);
+  box-shadow:var(--shadow);
+  text-align:center;
+}
+
+.loader{
+  width:58px;
+  height:58px;
+  border-radius:50%;
+  border:4px solid #dbeafe;
+  border-top-color:#1d4ed8;
+  animation:spin .8s linear infinite;
+  margin:0 auto 18px;
+}
+
+@keyframes spin{
+  to{transform:rotate(360deg)}
+}
+
+.processing-card h3{
+  margin:0 0 8px;
+  font-size:22px;
+}
+
+.processing-card p{
+  margin:0 0 18px;
+  color:var(--muted);
+  font-size:14px;
+  line-height:1.8;
+}
+
+.step-row{
+  display:flex;
+  justify-content:center;
+  gap:10px;
+  flex-wrap:wrap;
+}
+
+.step{
+  padding:8px 12px;
+  border-radius:999px;
+  background:#f8fafc;
+  border:1px solid var(--line);
+  color:var(--muted);
+  font-size:12px;
+  font-weight:900;
+}
+
+.step.on{
+  color:#1d4ed8;
+  background:#eff6ff;
+  border-color:#bfdbfe;
+}
+
+.step.done{
+  color:#059669;
+  background:#ecfdf5;
+  border-color:#a7f3d0;
+}
+
+@media print{
+  body{
+    background:#fff;
+  }
+
+  .header,
+  .memo-panel,
+  .toolbar,
+  .footer-note,
+  .toast-wrap,
+  .processing{
+    display:none!important;
+  }
+
+  .app{
+    max-width:none;
+    padding:0;
+  }
+
+  .layout{
+    grid-template-columns:1fr;
+  }
+
+  .panel{
+    box-shadow:none;
+    border:none;
+  }
+
+  .preview-wrap{
+    padding:0;
+  }
+
+  .doc{
+    box-shadow:none;
+    border:none;
+    border-radius:0;
+  }
+
+  .doc-cover,
+  .doc-body{
+    padding:24px;
+  }
+
+  .section,
+  .metric,
+  .section-box,
+  .toc-card,
+  .output-card,
+  .table-wrap,
+  details{
+    break-inside:avoid;
+  }
+}
+</style>
+</head>
+
+<body>
+<div class="toast-wrap" id="toastWrap"></div>
+
+<div class="processing" id="processing">
+  <div class="processing-card">
+    <div class="loader"></div>
+    <h3>교재 개요 및 목차 생성 중</h3>
+    <p>자유 메모를 바탕으로 과정 개요, 교재 구성 원칙, 회차별 목차, 실습 산출물, 작성 가이드를 자동 구성하고 있습니다.</p>
+    <div class="step-row">
+      <div class="step" id="step1">1. 메모 정리</div>
+      <div class="step" id="step2">2. 교재 구조 설계</div>
+      <div class="step" id="step3">3. 보고용 문서 생성</div>
+    </div>
+  </div>
+</div>
+
+<div class="app">
+  <div class="header">
+    <div class="header-left">
+      <div class="badge"><span class="badge-dot"></span> TEXTBOOK OUTLINE GENERATOR</div>
+      <h1>AI 활용 역량 강화 중급 과정 개발 프로젝트 — 교재 개요·목차 자동 생성</h1>
+      <p>
+        입력란은 하나만 사용합니다. 자유 메모에 아이디어를 쭉 적으면,
+        KICK OFF 장표 내용을 기본안으로 삼아 보고용 교재 개요서와 회차별 목차안을 자동 생성합니다.
+      </p>
+    </div>
+
+    <div class="header-actions">
+      <button class="btn sub" id="btnLoadDraft" type="button">최근 초안 불러오기</button>
+      <button class="btn ghost" id="btnSampleTop" type="button">샘플 입력</button>
+    </div>
+  </div>
+
+  <div class="layout">
+    <div class="panel memo-panel">
+      <div class="panel-head">
+        <div>
+          <h2>자유 메모 입력</h2>
+          <p>별도 항목을 많이 입력할 필요 없습니다. 회의 중 나온 말을 그대로 적으면 자동으로 교재 개요와 목차안으로 정리합니다.</p>
+        </div>
+      </div>
+
+      <div class="panel-body">
+        <textarea class="memo-box" id="memoInput" placeholder="예시)
+프롬프트 잘 쓰는 법은 앞쪽에 넣어야 함
+MS Copilot만 사용해야 함
+ChatGPT, Claude 이런 건 제외
+중급이지만 너무 어려운 용어는 빼야 함
+HTML은 처음부터 코딩하는 게 아니라 Copilot 도움 받아서 복붙하고 수정하는 방식
+To-do 웹 만들기 괜찮음
+업무 스케줄러도 만들면 좋겠음
+교육 운영 현황판도 실습으로 가능할 듯
+문서, 메일, 회의록 작성 실습도 필요
+강사 A는 기본기, B는 문서/메일, C는 스케줄러, D는 프로젝트 담당하면 좋겠음
+최종 프로젝트는 본인 업무 개선 산출물 발표
+다음 미팅 전까지 각자 맡고 싶은 파트랑 프롬프트 예시 준비"></textarea>
+
+        <div class="tip">
+          <strong>자동 생성 기준</strong>
+          <ul>
+            <li>아무것도 구조화하지 않아도 기본 KICK OFF 장표 기준으로 목차가 생성됩니다.</li>
+            <li>메모에 있는 키워드만 반영해 목차, 실습, 산출물, 역할 분담을 보정합니다.</li>
+            <li>외부 AI 도구명이 들어가도 최종 출력은 “MS Copilot 중심”으로 정리됩니다.</li>
+            <li>출력물은 회의록이 아니라 “보고용 교재 개요 + 목차안” 형태입니다.</li>
+          </ul>
+        </div>
+
+        <div class="actions">
+          <div class="btn-row">
+            <button class="btn primary" id="btnGenerate" type="button">교재 개요·목차 생성</button>
+            <button class="btn sub" id="btnSample" type="button">샘플</button>
+            <button class="btn sub" id="btnClear" type="button">초기화</button>
+          </div>
+
+          <div class="btn-row">
+            <button class="btn ghost" id="btnSaveDraft" type="button">초안 저장</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel">
+      <div class="panel-head">
+        <div>
+          <h2>보고용 교재 개요·목차안</h2>
+          <p>생성 결과는 인쇄/PDF 저장, HTML 복사, 요약 복사가 가능합니다.</p>
+        </div>
+
+        <div class="toolbar">
+          <button class="btn sub" id="btnCopySummary" type="button">요약 복사</button>
+          <button class="btn sub" id="btnCopyHTML" type="button">HTML 복사</button>
+          <button class="btn primary" id="btnPrint" type="button">인쇄 / PDF</button>
+        </div>
+      </div>
+
+      <div class="preview-wrap">
+        <div id="reportMount" class="empty">
+          <div class="empty-inner">
+            <h3>아직 생성된 교재 개요서가 없습니다</h3>
+            <p>
+              왼쪽 자유 메모에 아이디어를 입력한 뒤
+              <strong>교재 개요·목차 생성</strong> 버튼을 누르면,
+              보고용 교재 개요와 회차별 목차안이 여기에 표시됩니다.
+            </p>
+          </div>
+        </div>
+
+        <div class="footer-note">
+          <span>제목은 <strong>AI 활용 역량 강화 중급 과정 개발 프로젝트</strong>로 고정 반영됩니다.</span>
+          <span>기본안은 KICK OFF 장표 기준입니다.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+const $ = id => document.getElementById(id);
+
+const STORAGE_DRAFT = "simple_textbook_outline_draft_fixed_v2";
+const STORAGE_REPORT = "simple_textbook_outline_report_fixed_v2";
+
+const PROJECT_TITLE = "AI 활용 역량 강화 중급 과정 개발 프로젝트";
+const COURSE_SCALE = {sessions:8,hours:4,total:32,label:"8회 x 4H = 총 32H"};
+const MAIN_TOOL = "MS Copilot";
+const COURSE_DATE_LABEL = "2026. 06. 25 기준";
+const DEFAULT_PEOPLE = ["강사 A","강사 B","강사 C","강사 D"];
+
+let lastReport = null;
+
+function esc(value){
+  if(value == null) return "";
+  return String(value)
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;")
+    .replace(/'/g,"&#39;");
+}
+
+function todayStr(){
+  const d = new Date();
+  const p = n => String(n).padStart(2,"0");
+  return `${d.getFullYear()}.${p(d.getMonth()+1)}.${p(d.getDate())}`;
+}
+
+function toast(msg,type="default"){
+  const wrap = $("toastWrap");
+  const el = document.createElement("div");
+  el.className = `toast ${type==="good"?"good":type==="warn"?"warn":type==="bad"?"bad":""}`;
+  el.textContent = msg;
+  wrap.appendChild(el);
+  setTimeout(()=>{
+    el.style.opacity = "0";
+    el.style.transform = "translateY(-6px)";
+    el.style.transition = ".2s ease";
+    setTimeout(()=>el.remove(),220);
+  },2400);
+}
+
+function stripBullet(s){
+  return String(s || "").replace(/^\s*[-•·▪◦▸►→]+\s*/,"").trim();
+}
+
+function smartLines(raw){
+  return String(raw || "")
+    .replace(/\r/g,"")
+    .replace(/[•·▪◦▸►→]/g,"-")
+    .split("\n")
+    .map(v=>v.trim())
+    .filter(Boolean);
+}
+
+function normalizeKey(s){
+  return String(s || "")
+    .replace(/\s+/g," ")
+    .replace(/[.,:;·•\-—()（）[\]【】]/g,"")
+    .trim()
+    .toLowerCase();
+}
+
+function uniq(arr){
+  const out = [];
+  const seen = new Set();
+  for(const item of arr){
+    const key = normalizeKey(item);
+    if(!key || seen.has(key)) continue;
+    seen.add(key);
+    out.push(item);
+  }
+  return out;
+}
+
+function refineSentence(text){
+  let s = String(text || "").trim();
+  if(!s) return "";
+
+  s = stripBullet(s)
+    .replace(/\s+/g," ")
+    .replace(/그냥\s*/g,"")
+    .replace(/약간\s*/g,"")
+    .replace(/일단\s*/g,"")
+    .replace(/뭔가\s*/g,"")
+    .replace(/좀\s*/g,"")
+    .replace(/아무튼\s*/g,"")
+    .replace(/개발새발/g,"정리되지 않은 메모")
+    .replace(/대충/g,"초안 수준으로")
+    .replace(/복붙/g,"복사 후 수정")
+    .replace(/써먹/g,"활용")
+    .replace(/했음/g,"하였음")
+    .replace(/할거임/g,"진행 예정")
+    .replace(/갈거임/g,"추진 예정")
+    .replace(/해야 함/g,"필요")
+    .replace(/해야함/g,"필요")
+    .replace(/넣어야 함/g,"포함 필요")
+    .replace(/넣어야함/g,"포함 필요")
+    .replace(/넣자/g,"포함")
+    .replace(/빼야 함/g,"제외 필요")
+    .replace(/빼야함/g,"제외 필요")
+    .replace(/하지 말자/g,"지양")
+    .replace(/어렵게 하지 말자/g,"난이도 조정 필요")
+    .replace(/너무 어려운/g,"고난이도")
+    .replace(/너무/g,"과도하게")
+    .replace(/괜찮음/g,"적합")
+    .replace(/좋을 듯/g,"검토 가능")
+    .replace(/하면 좋겠음/g,"검토 필요")
+    .replace(/공유함/g,"공유 완료")
+    .replace(/공유했음/g,"공유 완료")
+    .replace(/얘기/g,"논의")
+    .replace(/니까/g,"므로")
+    .replace(/니깐/g,"므로")
+    .replace(/해서/g,"하여")
+    .replace(/같음/g,"것으로 판단됨")
+    .replace(/보임/g,"것으로 판단됨")
+    .replace(/처음부터 코딩/g,"전체 코드를 직접 작성")
+    .replace(/AI 도움/g,"Copilot 도움");
+
+  if(/chatgpt|claude|클로드|openai|외부 ai/i.test(s)){
+    s = s.replace(/chatgpt|claude|클로드|openai/gi,"외부 AI 도구");
+    if(!/제외|지양|사용하지 않/.test(s)){
+      s += "는 본 과정 범위에서 제외";
+    }
+  }
+
+  return s.replace(/\s{2,}/g," ").trim();
+}
+
+function detectFlags(raw){
+  const t = raw.toLowerCase();
+
+  return {
+    prompt:/프롬프트|prompt|질문|요청|지시|좋은 질문|요청문/.test(t),
+    docs:/문서|메일|회의록|보고|안내문|공지|요약|커뮤니케이션/.test(t),
+    todo:/todo|to-do|할 일|할일|업무 목록|우선순위|진행상태/.test(t),
+    html:/html|웹|페이지|코드|복사 후 수정|업무 도구|현황판/.test(t),
+    scheduler:/스케줄러|일정|타임라인|d-day|마감|달력/.test(t),
+    dashboard:/대시보드|현황판|운영 현황|교육 운영/.test(t),
+    project:/프로젝트|발표|최종|산출물|개인 업무/.test(t),
+    easy:/쉽게|어렵지|초보|비개발자|용어|난이도|따라/.test(t),
+    msOnly:/ms|copilot|코파일럿|외부 ai|chatgpt|claude|클로드|제외|사용하지/.test(t),
+    role:/강사|담당|파트|분배|역할|a는|b는|c는|d는/.test(t),
+    risk:/리스크|우려|이슈|문제|난이도|중복|부담|편차|이탈|어렵/.test(t)
+  };
+}
+
+function categorizeNotes(raw){
+  const lines = smartLines(raw).map(refineSentence).filter(Boolean);
+
+  const out = {
+    direction:[],
+    conditions:[],
+    toc:[],
+    practice:[],
+    roles:[],
+    risks:[],
+    next:[],
+    memo:[]
+  };
+
+  for(const line of lines){
+    if(/목표|방향|중심|역량|실무|대상|수준|학습|과정/.test(line)) out.direction.push(line);
+    else if(/MS Copilot|외부 AI|제외|지양|고정|반드시|필수|사용하지|중심/.test(line)) out.conditions.push(line);
+    else if(/목차|커리큘럼|회차|모듈|기본기|문서|메일|회의록|프롬프트|교재/.test(line)) out.toc.push(line);
+    else if(/실습|To-do|스케줄러|현황판|HTML|웹|산출물|페이지|프로젝트|대시보드/.test(line)) out.practice.push(line);
+    else if(/강사|담당|파트|역할|분배|A는|B는|C는|D는/.test(line)) out.roles.push(line);
+    else if(/리스크|우려|문제|중복|난이도|부담|편차|이탈|과도|어렵/.test(line)) out.risks.push(line);
+    else if(/다음|차기|준비|정리|확정|검토|작성|공유|미팅/.test(line)) out.next.push(line);
+    else out.memo.push(line);
+  }
+
+  Object.keys(out).forEach(k=>out[k]=uniq(out[k]));
+  return out;
+}
+
+function buildCurriculum(flags){
+  return [
+    {
+      title:"Copilot 활용 기본기와 좋은 요청문 작성",
+      chapter:"Part 1. Copilot 활용 기반 다지기",
+      objective:"MS Copilot 활용 원칙과 좋은 프롬프트의 기본 구조를 이해한다.",
+      outline:"Copilot 활용 범위, 좋은 요청과 나쁜 요청 비교, 목적·대상·맥락·자료·출력 형식·조건을 포함하는 요청문 작성법",
+      practice:"내 업무 요청문을 좋은 프롬프트로 바꾸기",
+      output:"개인 업무 프롬프트 초안"
+    },
+    {
+      title:"업무 산출물을 잘 만드는 프롬프트 작성 가이드",
+      chapter:"Part 2. 업무 프롬프트 작성 가이드",
+      objective:"업무 문서와 보고자료에 바로 적용 가능한 프롬프트 패턴을 익힌다.",
+      outline:"보고서, 메일, 안내문, 회의록, 요약문 작성 프롬프트 패턴과 톤앤매너 조정 방법",
+      practice:"업무별 프롬프트 템플릿 카드 만들기",
+      output:"업무 프롬프트 템플릿 세트"
+    },
+    {
+      title:"문서·메일·회의록 작성 실습",
+      chapter:"Part 2. 업무 커뮤니케이션 실습",
+      objective:"반복적으로 작성하는 업무 문서를 Copilot으로 빠르게 만들고 개선한다.",
+      outline:"교육 안내문, 리마인드 메일, 미팅 아젠다, 회의록, 결과 공유문 작성 및 개선",
+      practice:"업무 커뮤니케이션 패키지 제작",
+      output:"메일·회의록·안내문 템플릿"
+    },
+    {
+      title:"업무 메모를 실행 가능한 To-do로 정리하기",
+      chapter:"Part 3. 업무 정리와 실행 관리",
+      objective:"정리되지 않은 업무 메모를 담당자, 마감일, 우선순위, 진행상태 기준으로 구조화한다.",
+      outline:"업무 목록 정리, 우선순위 분류, 진행상태 구분, 지연 위험 업무 식별, 주간 실행 계획 수립",
+      practice:"내 업무 리스트를 실행 보드로 정리하기",
+      output:"업무 실행 보드"
+    },
+    {
+      title:"Copilot 도움으로 업무용 HTML 페이지 만들기",
+      chapter:"Part 4. 업무용 미니 도구 제작",
+      objective:"HTML을 처음부터 외우기보다 Copilot이 만든 초안을 이해하고 필요한 부분을 수정한다.",
+      outline:"샘플 코드 생성, 문구 수정, 색상 변경, 카드 추가, 섹션 정리 등 기초 수정 실습",
+      practice:"교육 안내 페이지 또는 업무 안내 페이지 만들기",
+      output:"업무 안내 페이지"
+    },
+    {
+      title:"개인 업무 To-do 관리 페이지 제작",
+      chapter:"Part 4. 업무용 미니 도구 제작",
+      objective:"업무명, 마감일, 우선순위, 진행상태를 한눈에 관리하는 개인 업무 페이지를 제작한다.",
+      outline:"업무 카드, 검색, 필터, 완료 표시, 진행률 표시 기능을 단계별 요청으로 구현",
+      practice:"개인 업무 To-do 관리 페이지 완성",
+      output:"To-do 관리 페이지"
+    },
+    {
+      title: flags.dashboard ? "교육 운영 현황판 제작" : "업무 일정·타임라인 스케줄러 제작",
+      chapter:"Part 4. 업무용 미니 도구 제작",
+      objective: flags.dashboard
+        ? "과정, 차수, 일정, 담당자, 진행상태를 한눈에 확인하는 운영 현황판을 제작한다."
+        : "교육 일정, 프로젝트 일정, 마감 업무를 한눈에 확인하는 스케줄러를 제작한다.",
+      outline: flags.dashboard
+        ? "과정명, 차수, 날짜, 장소, 담당자, 준비상태, 진행상태를 카드형 현황판으로 구성"
+        : "D-day, 상태 배지, 일정 카드, 주간 타임라인, 검색·필터 기능 구성",
+      practice: flags.dashboard ? "교육 운영 현황판 HTML 페이지 제작" : "업무 스케줄러 또는 교육 운영 일정표 제작",
+      output: flags.dashboard ? "교육 운영 현황판" : "업무 스케줄러"
+    },
+    {
+      title:"개인 업무 개선 미니 프로젝트",
+      chapter:"Part 5. 종합 프로젝트",
+      objective:"본인의 실제 업무 문제를 선택해 Copilot으로 개선한 결과물을 완성한다.",
+      outline:"업무 문제 선정, 산출물 정의, 프롬프트 작성, 초안 생성, 수정, 발표와 피드백",
+      practice:"개인 업무 개선 결과물 발표",
+      output:"최종 프로젝트 산출물"
+    }
+  ];
+}
+
+function buildRoles(){
+  return [
+    {
+      name:"강사 A",
+      scope:"Copilot 기본기 · 요청문 구조 · 업무 안내 페이지",
+      work:"좋은 프롬프트 작성법, 요청문 개선 실습, 업무 안내 페이지 제작 파트를 담당"
+    },
+    {
+      name:"강사 B",
+      scope:"업무 문서 · 메일 · To-do 관리",
+      work:"문서/메일/회의록 작성 실습과 개인 업무 To-do 관리 페이지 제작 파트를 담당"
+    },
+    {
+      name:"강사 C",
+      scope:"스케줄러 · 현황판 · HTML 실습",
+      work:"업무 일정 시각화, 스케줄러, 교육 운영 현황판 제작 실습 파트를 담당"
+    },
+    {
+      name:"강사 D",
+      scope:"업무 정리 · 최종 프로젝트",
+      work:"업무 메모 구조화, 실행 보드 정리, 개인 업무 개선 프로젝트 운영을 담당"
+    }
+  ];
+}
+
+function buildInsights(notes,flags){
+  const principles = uniq([
+    `${MAIN_TOOL} 중심으로 교재와 실습을 구성`,
+    "외부 생성형 AI 도구 중심 설명은 제외하고, 업무 활용 관점으로 재구성",
+    "중급 과정이지만 비전문가도 따라올 수 있도록 어려운 AI·개발 용어를 최소화",
+    "HTML 실습은 개발자 양성이 아니라 Copilot 도움으로 업무 도구를 제작하는 수준으로 설계",
+    "복사 후 수정 → 단계별 요청 → 본인 업무 적용 흐름으로 실습을 구성",
+    "회차별 실습 산출물을 명확히 하여 교육 후 업무 적용 가능성을 높임",
+    ...notes.conditions
+  ]);
+
+  const goals = uniq([
+    "좋은 프롬프트 작성법을 익혀 업무 요청 품질을 높인다.",
+    "문서, 메일, 회의록, 안내문 등 반복 업무 산출물을 빠르게 작성하고 개선한다.",
+    "정리되지 않은 업무 메모를 실행 가능한 To-do와 일정으로 구조화한다.",
+    "Copilot 도움으로 업무용 미니 웹 도구를 제작하고 본인 업무에 적용한다.",
+    "최종 프로젝트를 통해 개인 업무 개선 결과물을 완성한다.",
+    ...notes.direction
+  ]);
+
+  const risks = uniq([
+    ...notes.risks,
+    flags.easy ? "수강생별 AI/HTML 활용 수준 차이로 인해 실습 난이도 편차가 발생할 수 있음" : "",
+    flags.html ? "HTML 실습이 개발 교육으로 오해되지 않도록 업무 도구 제작 관점으로 설명 필요" : "",
+    flags.msOnly ? "외부 AI 도구와 혼재되지 않도록 교재 표현과 실습 도구 기준을 명확히 해야 함" : "",
+    "회차별 실습 산출물이 많아질 경우 시간 내 완성도 관리가 필요함"
+  ].filter(Boolean));
+
+  const next = uniq([
+    ...notes.next,
+    "차기 미팅에서 회차별 목차, 교재 템플릿, 강사별 담당 범위를 확정",
+    "각 강사는 담당 희망 파트와 실습 예시를 1개 이상 준비",
+    "프롬프트 예시는 나쁜 예시, 개선 예시, 최종 예시 형태로 준비",
+    "수강생 수준을 고려한 샘플 코드와 수정 가이드를 함께 준비"
+  ]);
+
+  return {principles,goals,risks,next};
+}
+
+function renderSignal(title,text,type){
+  return `
+    <div class="signal ${type}">
+      <div class="signal-title">${esc(title)}</div>
+      <div class="signal-text">${esc(text || "해당 사항 없음")}</div>
+    </div>
+  `;
+}
+
+function renderList(items,empty){
+  if(!items.length){
+    return `<div class="signal-list">${renderSignal("NO DATA",empty,"warn")}</div>`;
+  }
+
+  return `
+    <ul class="list">
+      ${items.map((item,i)=>`
+        <li class="list-item">
+          <div class="list-no">${i+1}</div>
+          <div class="list-body">${esc(item)}</div>
+        </li>
+      `).join("")}
+    </ul>
+  `;
+}
+
+function buildSummaryText(curriculum,insights){
+  const lines = [];
+
+  lines.push(`[프로젝트] ${PROJECT_TITLE}`);
+  lines.push(`[과정 규모] ${COURSE_SCALE.label}`);
+  lines.push(`[활용 도구] ${MAIN_TOOL}`);
+  lines.push("");
+  lines.push("[교재 개발 방향]");
+  lines.push("MS Copilot 기반 프롬프트 작성 역량 강화와 업무 산출물 제작 중심의 실습형 중급 과정");
+  lines.push("");
+  lines.push("[교재 구성 원칙]");
+  insights.principles.forEach(v=>lines.push(`- ${v}`));
+  lines.push("");
+  lines.push("[회차별 목차안]");
+  curriculum.forEach((c,i)=>{
+    lines.push(`${i+1}. ${c.title}`);
+    lines.push(`   - 학습 목표: ${c.objective}`);
+    lines.push(`   - 실습: ${c.practice}`);
+    lines.push(`   - 산출물: ${c.output}`);
+  });
+  lines.push("");
+  lines.push("[다음 개발 액션]");
+  insights.next.slice(0,6).forEach(v=>lines.push(`- ${v}`));
+
+  return lines.join("\n");
+}
+
+function buildReport(notes,flags,curriculum,roles,insights,raw){
+  const keyMessages = [
+    `본 프로젝트는 ${PROJECT_TITLE} 개발을 목표로 하며, ${MAIN_TOOL} 기반 실무 적용형 교재로 설계`,
+    "교재 방향은 단순 기능 소개가 아니라 프롬프트 작성 역량 강화와 업무 산출물 제작 실습 중심",
+    "수강생 수준을 고려하여 어려운 AI·개발 용어를 최소화하고 복사 후 수정 → 내 업무 적용 방식으로 구성",
+    "주요 실습은 업무 문서 작성, To-do 관리 페이지, 업무 스케줄러, 교육 운영 현황판 등 실제 업무 활용 가능한 결과물 제작 중심",
+    "강사 4인이 커리큘럼 기획, 교재 개발, 실습자료 제작, 강의 운영까지 공동 수행",
+    "교육 도구와 실습 방향은 외부 AI 도구가 아닌 MS Copilot 중심으로 제한"
+  ];
+
+  const outputs = [
+    {icon:"📄",title:"업무 문서 패키지",text:"교육 안내문, 리마인드 메일, 회의록, 결과 공유문 등 반복 업무 문서 템플릿"},
+    {icon:"🗂",title:"To-do 관리 페이지",text:"업무명, 마감일, 우선순위, 진행상태를 한눈에 볼 수 있는 개인 업무 관리 페이지"},
+    {icon:"📅",title:"업무 스케줄러",text:"교육 일정, 프로젝트 일정, 마감 업무를 카드와 타임라인 형태로 정리하는 페이지"},
+    {icon:"📊",title:"교육 운영 현황판",text:"과정, 차수, 일정, 담당자, 진행상태를 정리해 운영 흐름을 확인하는 현황판"}
+  ];
+
+  return `
+    <article class="doc" id="docRoot">
+      <section class="doc-cover">
+        <div class="doc-type">TEXTBOOK OVERVIEW · 교재 개요 및 목차안</div>
+        <h1 class="doc-title">${PROJECT_TITLE}</h1>
+        <p class="doc-sub">
+          KICK OFF 장표와 자유 메모를 바탕으로 자동 정리한 교재 개발 개요 및 회차별 목차안입니다.
+          본 자료는 강사 간 교재 개발 방향 정렬과 상위 보고에 모두 활용 가능한 형태로 구성되었습니다.
+        </p>
+
+        <div class="meta">
+          <div class="meta-box">
+            <div class="meta-label">작성 기준</div>
+            <div class="meta-value">${COURSE_DATE_LABEL}</div>
+          </div>
+          <div class="meta-box">
+            <div class="meta-label">과정 규모</div>
+            <div class="meta-value">${COURSE_SCALE.label}</div>
+          </div>
+          <div class="meta-box">
+            <div class="meta-label">활용 도구</div>
+            <div class="meta-value">${MAIN_TOOL}</div>
+          </div>
+          <div class="meta-box">
+            <div class="meta-label">개발 참여</div>
+            <div class="meta-value">${DEFAULT_PEOPLE.join(", ")}</div>
+          </div>
+        </div>
+      </section>
+
+      <section class="doc-body">
+        <div class="summary-zone">
+          <div class="main-summary">
+            <div class="eyebrow">EXECUTIVE OVERVIEW</div>
+            <h2>MS Copilot 기반 프롬프트 실무 활용과 업무 산출물 제작 중심의 중급 교재 개발</h2>
+            <p>본 교재는 AI와 Copilot 개념을 알고 있는 실무자가 프롬프트 작성법을 체계화하고, 업무 문서·To-do·일정·현황판 등 실제 업무에 활용 가능한 산출물을 제작할 수 있도록 설계합니다.
+
+회의 중 도출된 아이디어는 KICK OFF 장표의 기본 방향을 유지하되, 수강생 수준을 고려하여 “복사 후 수정 → 단계별 요청 → 본인 업무 적용” 흐름으로 재구성합니다.</p>
+          </div>
+
+          <div class="side-stack">
+            <div class="side-box">
+              <h4>교재 포지셔닝</h4>
+              <div class="signal-list">
+                ${renderSignal("POSITIONING","기능 설명형 교재가 아니라 업무 적용형 실습 교재로 구성","good")}
+                ${renderSignal("DIFFICULTY","중급 과정이지만 비개발자도 따라올 수 있도록 난이도 조정 필요","warn")}
+              </div>
+            </div>
+
+            <div class="side-box">
+              <h4>다음 개발 초점</h4>
+              <div class="signal-list">
+                ${renderSignal("NEXT FOCUS","회차별 목차 확정, 교재 템플릿 합의, 강사별 담당 파트 확정","info")}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="metric-grid">
+          <div class="metric">
+            <div class="metric-label">총 회차</div>
+            <div class="metric-value">${COURSE_SCALE.sessions}</div>
+            <div class="metric-sub">회차별 교재 구성</div>
+          </div>
+          <div class="metric">
+            <div class="metric-label">총 시간</div>
+            <div class="metric-value">${COURSE_SCALE.total}</div>
+            <div class="metric-sub">${COURSE_SCALE.hours}H 기준</div>
+          </div>
+          <div class="metric">
+            <div class="metric-label">실습 비중</div>
+            <div class="metric-value">70%</div>
+            <div class="metric-sub">산출물 제작 중심</div>
+          </div>
+          <div class="metric">
+            <div class="metric-label">핵심 산출물</div>
+            <div class="metric-value">4+</div>
+            <div class="metric-sub">문서, To-do, 스케줄러, 현황판</div>
+          </div>
+        </div>
+
+        <section class="section">
+          <div class="section-head">
+            <h3>1. 교재 개발 방향</h3>
+            <span class="section-tag">Development Direction</span>
+          </div>
+
+          <div class="columns">
+            <div class="section-box">
+              <div class="signal-list">
+                ${insights.principles.map(v=>renderSignal("교재 구성 원칙",v,"good")).join("")}
+              </div>
+            </div>
+            <div class="section-box">
+              <div class="signal-list">
+                ${insights.goals.slice(0,6).map(v=>renderSignal("학습 목표",v,"info")).join("")}
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="section">
+          <div class="section-head">
+            <h3>2. 교육 대상 및 난이도 기준</h3>
+            <span class="section-tag">Target Level</span>
+          </div>
+
+          <div class="section-box">
+            <div class="signal-list">
+              ${renderSignal("교육 대상","AI와 Copilot 개념은 알고 있으나, HTML/자동화는 AI 도움을 받아야 가능한 실무자","info")}
+              ${renderSignal("난이도 기준","HTML과 자동화는 전체 코드를 직접 작성하는 방식이 아니라, Copilot이 생성한 초안을 이해하고 필요한 부분을 수정하는 방식으로 구성","warn")}
+              ${renderSignal("학습 흐름","개념 이해 → 요청문 작성 → 샘플 생성 → 수정 실습 → 본인 업무 적용 순서로 단계화","good")}
+            </div>
+          </div>
+        </section>
+
+        <section class="section">
+          <div class="section-head">
+            <h3>3. 회차별 교재 목차안</h3>
+            <span class="section-tag">${curriculum.length} Sessions</span>
+          </div>
+
+          <div class="toc-grid">
+            ${curriculum.map((c,i)=>`
+              <div class="toc-card">
+                <div class="toc-head">
+                  <div>
+                    <span class="session-pill">${i+1}회차 · ${esc(c.chapter)}</span>
+                    <h4>${esc(c.title)}</h4>
+                  </div>
+                  <div class="time-pill">${COURSE_SCALE.hours}H</div>
+                </div>
+                <div class="toc-body">
+                  <dl>
+                    <div>
+                      <dt>학습 목표</dt>
+                      <dd>${esc(c.objective)}</dd>
+                    </div>
+                    <div>
+                      <dt>교재 주요 내용</dt>
+                      <dd>${esc(c.outline)}</dd>
+                    </div>
+                    <div>
+                      <dt>핵심 실습</dt>
+                      <dd>${esc(c.practice)}</dd>
+                    </div>
+                    <div>
+                      <dt>수강생 산출물</dt>
+                      <dd>${esc(c.output)}</dd>
+                    </div>
+                  </dl>
+                </div>
+              </div>
+            `).join("")}
+          </div>
+        </section>
+
+        <section class="section">
+          <div class="section-head">
+            <h3>4. 주요 실습 산출물</h3>
+            <span class="section-tag">Practice Outputs</span>
+          </div>
+
+          <div class="output-grid">
+            ${outputs.map(o=>`
+              <div class="output-card">
+                <div class="output-icon">${o.icon}</div>
+                <h4>${esc(o.title)}</h4>
+                <p>${esc(o.text)}</p>
+              </div>
+            `).join("")}
+          </div>
+        </section>
+
+        <section class="section">
+          <div class="section-head">
+            <h3>5. 교재 작성 가이드</h3>
+            <span class="section-tag">Writing Guide</span>
+          </div>
+
+          <div class="table-wrap">
+            <table class="report-table">
+              <thead>
+                <tr>
+                  <th style="width:180px;">구분</th>
+                  <th>작성 기준</th>
+                  <th style="width:260px;">주의사항</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><span class="pill blue">용어 수준</span></td>
+                  <td>AI 전문 용어는 최소화하고, 실무자가 이해할 수 있는 쉬운 업무 표현을 사용</td>
+                  <td>고난도 기술 용어는 필요한 경우 쉬운 설명으로 대체</td>
+                </tr>
+                <tr>
+                  <td><span class="pill green">실습 안내</span></td>
+                  <td>복사 후 수정, 단계별 요청, 결과 비교 방식으로 구성</td>
+                  <td>처음부터 직접 코딩하는 방식으로 보이지 않도록 설명</td>
+                </tr>
+                <tr>
+                  <td><span class="pill purple">도구 기준</span></td>
+                  <td>교재와 실습은 MS Copilot 중심으로 구성</td>
+                  <td>외부 AI 도구 사례는 제외하거나 비교 설명 없이 정리</td>
+                </tr>
+                <tr>
+                  <td><span class="pill amber">산출물 기준</span></td>
+                  <td>각 회차마다 수강생이 가져갈 결과물을 명확히 제시</td>
+                  <td>단순 시연이 아니라 업무에 적용 가능한 결과물 중심</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <section class="section">
+          <div class="section-head">
+            <h3>6. 강사별 역할 분담안</h3>
+            <span class="section-tag">Role Assignment</span>
+          </div>
+
+          <div class="table-wrap">
+            <table class="report-table">
+              <thead>
+                <tr>
+                  <th style="width:150px;">담당</th>
+                  <th style="width:300px;">담당 영역</th>
+                  <th>역할 설명</th>
+                </tr>
+              </thead>
+              <tbody>
+                ${roles.map(r=>`
+                  <tr>
+                    <td><strong>${esc(r.name)}</strong></td>
+                    <td><span class="pill blue">${esc(r.scope)}</span></td>
+                    <td>${esc(r.work)}</td>
+                  </tr>
+                `).join("")}
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <section class="section">
+          <div class="section-head">
+            <h3>7. 검토 필요 사항</h3>
+            <span class="section-tag">Review Points</span>
+          </div>
+
+          <div class="columns">
+            <div class="section-box">
+              <div class="signal-list">
+                ${insights.risks.map(v=>renderSignal("검토 필요",v,/(리스크|우려|이탈|중복|편차|과도)/.test(v) ? "risk" : "warn")).join("")}
+              </div>
+            </div>
+            <div class="section-box">
+              <div class="signal-list">
+                ${renderSignal("교재 품질 관점","회차별 실습 난이도, 설명 분량, 산출물 완성 시간을 기준으로 교재 검토 필요","info")}
+                ${renderSignal("운영 관점","차수별 피드백을 반영해 실습 예제와 안내 문구를 지속 보완하는 방식 권장","info")}
+                ${renderSignal("보고 관점","자료 내 특정 임원 호칭은 사용하지 않고 객관적인 공유 및 보고 핵심사항으로 정리","good")}
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="section">
+          <div class="section-head">
+            <h3>8. 다음 개발 액션</h3>
+            <span class="section-tag">Next Actions</span>
+          </div>
+
+          <div class="section-box">
+            ${renderList(insights.next,"다음 개발 액션이 별도로 입력되지 않았습니다.")}
+          </div>
+        </section>
+
+        <section class="section">
+          <div class="section-head">
+            <h3>9. 공유 및 보고 핵심사항</h3>
+            <span class="section-tag">Key Messages</span>
+          </div>
+
+          <div class="section-box">
+            ${renderList(keyMessages,"공유 및 보고 핵심사항 없음")}
+          </div>
+        </section>
+
+        <section class="section">
+          <div class="section-head">
+            <h3>10. 자유 메모 반영 내용</h3>
+            <span class="section-tag">Appendix</span>
+          </div>
+
+          <details>
+            <summary>
+              <span>자동 분류 결과 및 원문 보기</span>
+              <span style="color:#64748b">클릭하여 확인</span>
+            </summary>
+            <div class="details-body">[과정 방향]
+${notes.direction.join("\n") || "없음"}
+
+[필수 조건]
+${notes.conditions.join("\n") || "없음"}
+
+[목차 관련]
+${notes.toc.join("\n") || "없음"}
+
+[실습 관련]
+${notes.practice.join("\n") || "없음"}
+
+[역할 관련]
+${notes.roles.join("\n") || "없음"}
+
+[검토/리스크]
+${notes.risks.join("\n") || "없음"}
+
+[다음 액션]
+${notes.next.join("\n") || "없음"}
+
+[원문]
+${esc(raw)}</div>
+          </details>
+        </section>
+
+        <div class="footer-note" style="margin-top:18px">
+          <span>작성일: ${todayStr()}</span>
+          <span>본 문서는 자유 입력 메모를 기반으로 자동 정리된 교재 개요 및 목차안입니다.</span>
+        </div>
+      </section>
+    </article>
+  `;
+}
+
+function buildAll(){
+  let raw = $("memoInput").value.trim();
+
+  if(!raw){
+    raw = "KICK OFF 장표 기준 기본안으로 교재 개요와 목차를 생성";
+    toast("메모가 없어 기본 KICK OFF 기준으로 생성합니다.","warn");
+  }
+
+  $("processing").classList.add("show");
+  setStep(1);
+
+  setTimeout(()=>{
+    const notes = categorizeNotes(raw);
+    const flags = detectFlags(raw);
+    setStep(2);
+
+    setTimeout(()=>{
+      const curriculum = buildCurriculum(flags);
+      const roles = buildRoles();
+      const insights = buildInsights(notes,flags);
+      const html = buildReport(notes,flags,curriculum,roles,insights,raw);
+      const summaryText = buildSummaryText(curriculum,insights);
+
+      setStep(3);
+
+      const mount = $("reportMount");
+      mount.className = "";
+      mount.innerHTML = html;
+
+      lastReport = {
+        raw,
+        notes,
+        flags,
+        curriculum,
+        roles,
+        insights,
+        html,
+        summaryText,
+        savedAt:new Date().toISOString()
+      };
+
+      localStorage.setItem(STORAGE_REPORT,JSON.stringify(lastReport));
+      localStorage.setItem(STORAGE_DRAFT,$("memoInput").value);
+
+      setTimeout(()=>{
+        $("processing").classList.remove("show");
+        toast("교재 개요·목차안 생성 완료","good");
+      },260);
+    },420);
+  },360);
+}
+
+function setStep(step){
+  ["step1","step2","step3"].forEach((id,idx)=>{
+    const el = $(id);
+    el.classList.remove("on","done");
+
+    if(idx + 1 < step) el.classList.add("done");
+    else if(idx + 1 === step) el.classList.add("on");
+  });
+}
+
+function loadSample(){
+  $("memoInput").value = `프롬프트 잘 쓰는 법은 앞쪽에 넣어야 함
+MS Copilot만 사용해야 함
+ChatGPT, Claude 이런 외부 AI는 제외
+중급이지만 너무 어려운 용어는 빼야 함
+HTML은 처음부터 코딩하는 게 아니라 Copilot 도움 받아서 복붙하고 수정하는 방식
+설명보다 실습 위주로 가야 함
+
+문서, 메일, 회의록 작성 실습 필요
+교육 안내문이나 리마인드 메일 만드는 거 괜찮음
+업무 메모를 To-do로 정리하는 것도 필요
+To-do 웹 만들기 괜찮음
+업무 스케줄러도 만들면 좋겠음
+교육 운영 현황판도 실습으로 가능할 듯
+
+강사 A는 기본기와 안내 페이지
+강사 B는 문서/메일과 To-do
+강사 C는 스케줄러와 현황판
+강사 D는 업무 정리와 최종 프로젝트 담당하면 좋겠음
+
+최종 프로젝트는 본인 업무 개선 산출물 발표
+다음 미팅 전까지 각자 맡고 싶은 파트랑 프롬프트 예시 준비
+수강생 편차가 있을 수 있어서 난이도 조정 필요
+모듈 간 중복이 생기지 않게 목차 검토 필요`;
+
+  localStorage.setItem(STORAGE_DRAFT,$("memoInput").value);
+  toast("샘플 입력 완료","good");
+}
+
+function loadDraft(){
+  const raw = localStorage.getItem(STORAGE_DRAFT);
+
+  if(!raw){
+    toast("저장된 최근 초안이 없습니다.","warn");
+    return;
+  }
+
+  $("memoInput").value = raw;
+  toast("최근 초안을 불러왔습니다.","good");
+}
+
+function loadLastReport(){
+  try{
+    const data = JSON.parse(localStorage.getItem(STORAGE_REPORT) || "null");
+    if(!data || !data.html) return;
+
+    $("reportMount").className = "";
+    $("reportMount").innerHTML = data.html;
+    lastReport = data;
+  }catch(e){}
+}
+
+$("btnGenerate").addEventListener("click",buildAll);
+$("btnSample").addEventListener("click",loadSample);
+$("btnSampleTop").addEventListener("click",loadSample);
+
+$("btnClear").addEventListener("click",()=>{
+  if(!confirm("자유 메모를 초기화할까요?")) return;
+  $("memoInput").value = "";
+  localStorage.removeItem(STORAGE_DRAFT);
+  toast("초기화 완료","good");
+});
+
+$("btnSaveDraft").addEventListener("click",()=>{
+  localStorage.setItem(STORAGE_DRAFT,$("memoInput").value);
+  toast("초안 저장 완료","good");
+});
+
+$("btnLoadDraft").addEventListener("click",loadDraft);
+
+$("btnPrint").addEventListener("click",()=>{
+  if(!lastReport && !$("reportMount").querySelector(".doc")){
+    toast("먼저 교재 개요·목차안을 생성해주세요.","warn");
+    return;
+  }
+
+  window.print();
+});
+
+$("btnCopySummary").addEventListener("click",async()=>{
+  if(!lastReport){
+    toast("먼저 교재 개요·목차안을 생성해주세요.","warn");
+    return;
+  }
+
+  try{
+    await navigator.clipboard.writeText(lastReport.summaryText);
+    toast("요약 복사 완료","good");
+  }catch(e){
+    toast("복사에 실패했습니다.","bad");
+  }
+});
+
+$("btnCopyHTML").addEventListener("click",async()=>{
+  const html = $("reportMount").innerHTML.trim();
+
+  if(!html || !$("reportMount").querySelector(".doc")){
+    toast("먼저 교재 개요·목차안을 생성해주세요.","warn");
+    return;
+  }
+
+  try{
+    await navigator.clipboard.writeText(html);
+    toast("HTML 복사 완료","good");
+  }catch(e){
+    toast("복사에 실패했습니다.","bad");
+  }
+});
+
+(function init(){
+  const saved = localStorage.getItem(STORAGE_DRAFT);
+
+  if(saved){
+    $("memoInput").value = saved;
+  }
+
+  loadLastReport();
+})();
+</script>
+</body>
+</html>
