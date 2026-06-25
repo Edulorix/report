@@ -1,0 +1,2181 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>AI 활용 역량 강화 중급 과정 개발 프로젝트 — 회의록</title>
+
+<style>
+:root{
+  --bg:#f4f7fb;
+  --surface:#ffffff;
+  --surface2:#f8fafc;
+  --text:#0f172a;
+  --text2:#334155;
+  --text3:#475569;
+  --muted:#64748b;
+  --line:#dbe3ec;
+  --line2:#cbd5e1;
+  --primary:#1d4ed8;
+  --navy:#0f172a;
+  --indigo:#4f46e5;
+  --green:#059669;
+  --amber:#d97706;
+  --red:#dc2626;
+  --purple:#7c3aed;
+  --shadow:0 10px 28px rgba(15,23,42,.08);
+  --shadowSoft:0 4px 18px rgba(15,23,42,.05);
+  --radius:24px;
+  --sans:-apple-system,BlinkMacSystemFont,"Segoe UI","Apple SD Gothic Neo","Malgun Gothic","Noto Sans KR",sans-serif;
+}
+
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{
+  font-family:var(--sans);
+  color:var(--text);
+  background:
+    radial-gradient(circle at 0% 0%,rgba(79,70,229,.06),transparent 24%),
+    radial-gradient(circle at 100% 0%,rgba(29,78,216,.05),transparent 20%),
+    linear-gradient(180deg,#f8fbff 0%,#f4f7fb 100%);
+  min-height:100vh;
+}
+
+.app{
+  max-width:1540px;
+  margin:0 auto;
+  padding:28px;
+}
+
+.hero{
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-end;
+  gap:24px;
+  margin-bottom:24px;
+}
+
+.hero-badge{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  padding:8px 12px;
+  border-radius:999px;
+  background:rgba(79,70,229,.07);
+  border:1px solid rgba(79,70,229,.12);
+  color:var(--indigo);
+  font-size:12px;
+  font-weight:900;
+  letter-spacing:.04em;
+}
+
+.hero-badge .dot{
+  width:8px;
+  height:8px;
+  border-radius:50%;
+  background:linear-gradient(135deg,#1d4ed8,#4f46e5);
+  box-shadow:0 0 0 5px rgba(79,70,229,.08);
+}
+
+.hero h1{
+  margin:14px 0 8px;
+  font-size:34px;
+  line-height:1.16;
+  letter-spacing:-.04em;
+  word-break:keep-all;
+}
+
+.hero p{
+  margin:0;
+  color:var(--muted);
+  font-size:14px;
+  line-height:1.85;
+  max-width:940px;
+  word-break:keep-all;
+}
+
+.hero-actions{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+  justify-content:flex-end;
+}
+
+.shell{
+  display:grid;
+  grid-template-columns:520px 1fr;
+  gap:22px;
+  align-items:start;
+}
+
+@media(max-width:1280px){
+  .hero{flex-direction:column;align-items:flex-start}
+  .hero-actions{justify-content:flex-start}
+  .shell{grid-template-columns:1fr}
+}
+
+.panel{
+  background:rgba(255,255,255,.88);
+  backdrop-filter:blur(10px);
+  border:1px solid rgba(255,255,255,.85);
+  border-radius:26px;
+  overflow:hidden;
+  box-shadow:var(--shadow);
+}
+
+.panel-head{
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-start;
+  gap:16px;
+  padding:22px 22px 18px;
+  border-bottom:1px solid var(--line);
+  background:linear-gradient(180deg,#ffffff,#fbfdff);
+}
+
+.panel-head h2{
+  margin:0;
+  font-size:18px;
+  letter-spacing:-.02em;
+}
+
+.panel-head p{
+  margin:5px 0 0;
+  color:var(--muted);
+  font-size:13px;
+  line-height:1.75;
+}
+
+.panel-body{
+  padding:20px 22px 22px;
+}
+
+.grid-2{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+}
+
+@media(max-width:660px){
+  .grid-2{grid-template-columns:1fr}
+}
+
+.field{margin-bottom:14px}
+
+.field label{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:10px;
+  margin-bottom:8px;
+  color:var(--text2);
+  font-size:13px;
+  font-weight:800;
+}
+
+.field label .hint{
+  color:var(--muted);
+  font-size:12px;
+  font-weight:600;
+}
+
+.input,
+.select,
+.textarea{
+  width:100%;
+  background:#fff;
+  border:1px solid var(--line);
+  border-radius:14px;
+  padding:13px 14px;
+  font:inherit;
+  color:var(--text);
+  outline:none;
+  transition:.18s ease;
+}
+
+.input:focus,
+.select:focus,
+.textarea:focus{
+  border-color:#93c5fd;
+  box-shadow:0 0 0 4px rgba(59,130,246,.12);
+}
+
+.input::placeholder,
+.textarea::placeholder{
+  color:#94a3b8;
+}
+
+.textarea{
+  min-height:360px;
+  resize:vertical;
+  line-height:1.85;
+}
+
+.attendee-row{
+  display:flex;
+  gap:8px;
+}
+
+.attendee-row .input{flex:1}
+
+.chips{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+  min-height:20px;
+  margin-top:10px;
+}
+
+.chip{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  padding:8px 12px;
+  border-radius:999px;
+  background:linear-gradient(135deg,#eff6ff,#eef2ff);
+  border:1px solid #dbeafe;
+  color:#1e3a8a;
+  font-size:12px;
+  font-weight:800;
+}
+
+.chip .remove{
+  cursor:pointer;
+  opacity:.68;
+  font-weight:900;
+}
+
+.chip .remove:hover{opacity:1}
+
+.tip-box{
+  margin-top:10px;
+  padding:14px 15px;
+  border-radius:18px;
+  border:1px solid var(--line);
+  background:linear-gradient(180deg,#ffffff,#fafcff);
+}
+
+.tip-box strong{
+  display:block;
+  margin-bottom:6px;
+  font-size:13px;
+  color:var(--text2);
+}
+
+.tip-box ul{
+  margin:0 0 0 18px;
+  padding:0;
+  color:var(--muted);
+  font-size:12px;
+  line-height:1.9;
+}
+
+.toolbar{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+}
+
+.split{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:16px;
+  margin-top:18px;
+  padding-top:18px;
+  border-top:1px dashed var(--line2);
+  flex-wrap:wrap;
+}
+
+.btn{
+  appearance:none;
+  border:none;
+  border-radius:14px;
+  padding:12px 16px;
+  font:inherit;
+  font-weight:900;
+  cursor:pointer;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:8px;
+  transition:.18s ease;
+  letter-spacing:-.01em;
+  white-space:nowrap;
+}
+
+.btn:hover{transform:translateY(-1px)}
+.btn:active{transform:translateY(0)}
+
+.btn.primary{
+  color:#fff;
+  background:linear-gradient(135deg,#0f172a,#1e3a8a);
+  box-shadow:0 10px 22px rgba(15,23,42,.16);
+}
+
+.btn.sub{
+  color:var(--text2);
+  background:#fff;
+  border:1px solid var(--line);
+}
+
+.btn.soft{
+  color:#3730a3;
+  background:#eef2ff;
+  border:1px solid rgba(79,70,229,.12);
+}
+
+.btn.ghost{
+  color:var(--muted);
+  background:transparent;
+  border:1px dashed var(--line2);
+}
+
+.output-shell{
+  padding:22px;
+  background:linear-gradient(180deg,rgba(255,255,255,.92),rgba(255,255,255,.98));
+}
+
+.empty{
+  min-height:880px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  border:1px dashed var(--line2);
+  border-radius:26px;
+  background:linear-gradient(180deg,#ffffff,#fbfdff);
+  color:var(--muted);
+}
+
+.empty-inner{
+  max-width:560px;
+  padding:36px 22px;
+}
+
+.empty h3{
+  margin:0 0 10px;
+  color:var(--text);
+  font-size:24px;
+  letter-spacing:-.03em;
+}
+
+.empty p{
+  margin:0;
+  font-size:14px;
+  line-height:1.9;
+}
+
+/* Report */
+.report{
+  background:#fff;
+  border:1px solid var(--line);
+  border-radius:28px;
+  overflow:hidden;
+  box-shadow:var(--shadow);
+}
+
+.rpt-cover{
+  position:relative;
+  padding:36px 34px 28px;
+  color:#fff;
+  background:linear-gradient(135deg,#0f172a 0%,#102756 42%,#1e3a8a 100%);
+  overflow:hidden;
+}
+
+.rpt-cover::before{
+  content:"";
+  position:absolute;
+  right:-80px;
+  top:-70px;
+  width:280px;
+  height:280px;
+  border-radius:50%;
+  background:radial-gradient(circle,rgba(255,255,255,.16),transparent 70%);
+}
+
+.rpt-cover::after{
+  content:"";
+  position:absolute;
+  left:-70px;
+  bottom:-90px;
+  width:260px;
+  height:260px;
+  border-radius:50%;
+  background:radial-gradient(circle,rgba(96,165,250,.22),transparent 72%);
+}
+
+.rpt-cover > *{position:relative;z-index:1}
+
+.rpt-badge{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  padding:8px 12px;
+  border-radius:999px;
+  background:rgba(255,255,255,.08);
+  border:1px solid rgba(255,255,255,.14);
+  color:#dbeafe;
+  font-size:12px;
+  font-weight:900;
+  letter-spacing:.05em;
+  margin-bottom:18px;
+}
+
+.rpt-title{
+  margin:0 0 10px;
+  font-size:30px;
+  line-height:1.26;
+  letter-spacing:-.04em;
+  font-weight:900;
+  max-width:980px;
+  word-break:keep-all;
+}
+
+.rpt-sub{
+  margin:0 0 20px;
+  font-size:14px;
+  line-height:1.9;
+  color:rgba(255,255,255,.92);
+  max-width:960px;
+}
+
+.meta-grid{
+  display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));
+  gap:12px;
+}
+
+@media(max-width:980px){
+  .meta-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+
+.meta-card{
+  min-height:88px;
+  padding:14px 16px;
+  border-radius:18px;
+  background:rgba(255,255,255,.08);
+  border:1px solid rgba(255,255,255,.12);
+}
+
+.meta-label{
+  margin-bottom:8px;
+  color:rgba(255,255,255,.7);
+  font-size:11px;
+  font-weight:900;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+}
+
+.meta-value{
+  color:#fff;
+  font-size:14px;
+  line-height:1.7;
+  font-weight:700;
+  word-break:keep-all;
+}
+
+.rpt-body{
+  padding:26px 28px 30px;
+  background:linear-gradient(180deg,#ffffff 0%,#fcfdff 100%);
+}
+
+.summary-grid{
+  display:grid;
+  grid-template-columns:1.25fr .85fr;
+  gap:16px;
+  margin-bottom:16px;
+}
+
+@media(max-width:1120px){
+  .summary-grid{grid-template-columns:1fr}
+}
+
+.hero-card,
+.side-card,
+.block,
+.mini-card{
+  background:#fff;
+  border:1px solid var(--line);
+  border-radius:22px;
+  box-shadow:var(--shadowSoft);
+}
+
+.hero-card{
+  padding:22px 22px 18px;
+  background:linear-gradient(180deg,#ffffff,#fbfdff);
+}
+
+.hero-eyebrow{
+  margin-bottom:10px;
+  color:var(--primary);
+  font-size:12px;
+  font-weight:900;
+  letter-spacing:.06em;
+}
+
+.hero-title{
+  margin:0 0 12px;
+  font-size:22px;
+  line-height:1.42;
+  letter-spacing:-.03em;
+  word-break:keep-all;
+}
+
+.hero-desc{
+  margin:0;
+  color:var(--text2);
+  font-size:14px;
+  line-height:1.92;
+  white-space:pre-wrap;
+}
+
+.side-stack{
+  display:grid;
+  gap:16px;
+}
+
+.side-card{
+  padding:18px 18px 16px;
+}
+
+.side-card h4{
+  margin:0 0 10px;
+  font-size:14px;
+}
+
+.metric-grid{
+  display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));
+  gap:14px;
+  margin-bottom:16px;
+}
+
+@media(max-width:980px){
+  .metric-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+
+.mini-card{
+  padding:16px 16px 14px;
+  background:linear-gradient(180deg,#ffffff,#fbfdff);
+}
+
+.mini-label{
+  margin-bottom:10px;
+  color:var(--muted);
+  font-size:12px;
+  font-weight:800;
+}
+
+.mini-value{
+  margin-bottom:8px;
+  color:var(--text);
+  font-size:28px;
+  font-weight:900;
+  letter-spacing:-.04em;
+}
+
+.mini-sub{
+  color:var(--text3);
+  font-size:12px;
+  line-height:1.75;
+}
+
+.section{margin-top:18px}
+
+.section-head{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:12px;
+  margin-bottom:12px;
+  flex-wrap:wrap;
+}
+
+.section-head h3{
+  margin:0;
+  font-size:18px;
+  letter-spacing:-.02em;
+}
+
+.badge{
+  display:inline-flex;
+  align-items:center;
+  padding:7px 12px;
+  border-radius:999px;
+  background:#f8fafc;
+  border:1px solid var(--line);
+  color:var(--text3);
+  font-size:12px;
+  font-weight:800;
+}
+
+.block{padding:18px 18px 16px}
+
+.list{
+  list-style:none;
+  margin:0;
+  padding:0;
+  display:grid;
+  gap:10px;
+}
+
+.list-item{
+  display:grid;
+  grid-template-columns:28px 1fr;
+  gap:12px;
+  padding:14px;
+  border:1px solid var(--line);
+  border-radius:16px;
+  background:linear-gradient(180deg,#ffffff,#fbfdff);
+}
+
+.list-no{
+  width:28px;
+  height:28px;
+  border-radius:10px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  color:#fff;
+  font-size:12px;
+  font-weight:900;
+  background:linear-gradient(135deg,#1e3a8a,#4f46e5);
+}
+
+.list-body{
+  color:var(--text2);
+  font-size:14px;
+  line-height:1.9;
+  font-weight:700;
+  word-break:keep-all;
+}
+
+.columns{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:16px;
+}
+
+@media(max-width:980px){
+  .columns{grid-template-columns:1fr}
+}
+
+.signal-list{
+  display:grid;
+  gap:10px;
+}
+
+.signal{
+  padding:14px;
+  border-radius:16px;
+  border:1px solid var(--line);
+  background:linear-gradient(180deg,#ffffff,#fbfdff);
+}
+
+.signal.good{
+  border-color:#ccefdc;
+  background:linear-gradient(180deg,#f4fdf8,#ffffff);
+}
+
+.signal.warn{
+  border-color:#fde7b0;
+  background:linear-gradient(180deg,#fffaf0,#ffffff);
+}
+
+.signal.risk{
+  border-color:#fecaca;
+  background:linear-gradient(180deg,#fff5f5,#ffffff);
+}
+
+.signal .title{
+  margin-bottom:8px;
+  font-size:12px;
+  font-weight:900;
+  letter-spacing:.05em;
+}
+
+.signal.good .title{color:var(--green)}
+.signal.warn .title{color:var(--amber)}
+.signal.risk .title{color:var(--red)}
+
+.signal .text{
+  color:var(--text2);
+  font-size:14px;
+  line-height:1.9;
+  font-weight:700;
+  white-space:pre-wrap;
+  word-break:keep-all;
+}
+
+.table-wrap{
+  overflow:auto;
+  border:1px solid var(--line);
+  border-radius:20px;
+  background:#fff;
+  box-shadow:var(--shadowSoft);
+}
+
+table{
+  width:100%;
+  border-collapse:separate;
+  border-spacing:0;
+}
+
+.exec-table thead th{
+  background:linear-gradient(180deg,#0f172a,#1e293b);
+  color:#fff;
+  text-align:left;
+  font-size:12px;
+  font-weight:900;
+  letter-spacing:.05em;
+  padding:14px;
+  white-space:nowrap;
+}
+
+.exec-table tbody td{
+  padding:14px;
+  border-bottom:1px solid var(--line);
+  color:var(--text2);
+  font-size:13px;
+  line-height:1.75;
+  vertical-align:top;
+  background:#fff;
+}
+
+.exec-table tbody tr:nth-child(even) td{background:#fcfdff}
+.exec-table tbody tr:last-child td{border-bottom:none}
+
+.pill{
+  display:inline-flex;
+  align-items:center;
+  padding:6px 10px;
+  border-radius:999px;
+  font-size:12px;
+  font-weight:900;
+  white-space:nowrap;
+}
+
+.pill.blue{background:#eff6ff;color:#1d4ed8;border:1px solid #dbeafe}
+.pill.green{background:#ecfdf5;color:#059669;border:1px solid #d1fae5}
+.pill.amber{background:#fff7ed;color:#d97706;border:1px solid #fed7aa}
+.pill.red{background:#fef2f2;color:#dc2626;border:1px solid #fecaca}
+.pill.gray{background:#f8fafc;color:#475569;border:1px solid #e2e8f0}
+.pill.purple{background:#f5f3ff;color:#6d28d9;border:1px solid #ddd6fe}
+
+.next-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:16px;
+}
+
+@media(max-width:980px){
+  .next-grid{grid-template-columns:1fr}
+}
+
+details{
+  border:1px solid var(--line);
+  background:#fff;
+  border-radius:18px;
+  overflow:hidden;
+  box-shadow:var(--shadowSoft);
+}
+
+summary{
+  list-style:none;
+  cursor:pointer;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:10px;
+  padding:16px 18px;
+  color:var(--text);
+  font-size:14px;
+  font-weight:900;
+}
+
+summary::-webkit-details-marker{display:none}
+
+.details-body{
+  border-top:1px solid var(--line);
+  padding:16px 18px 18px;
+  color:var(--text2);
+  font-size:14px;
+  line-height:1.95;
+  white-space:pre-wrap;
+  word-break:keep-all;
+}
+
+.footer-note{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:12px;
+  flex-wrap:wrap;
+  margin-top:14px;
+  color:var(--muted);
+  font-size:12px;
+}
+
+.toast-wrap{
+  position:fixed;
+  top:20px;
+  right:20px;
+  z-index:10000;
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+}
+
+.toast{
+  padding:12px 14px;
+  border-radius:14px;
+  color:#fff;
+  background:#0f172a;
+  box-shadow:var(--shadow);
+  font-size:13px;
+  font-weight:800;
+}
+
+.toast.good{background:#065f46}
+.toast.warn{background:#92400e}
+.toast.bad{background:#991b1b}
+
+.processing{
+  position:fixed;
+  inset:0;
+  background:rgba(244,247,251,.84);
+  backdrop-filter:blur(10px);
+  display:none;
+  align-items:center;
+  justify-content:center;
+  z-index:9999;
+}
+
+.processing.show{display:flex}
+
+.processing-card{
+  width:min(560px,calc(100vw - 40px));
+  padding:28px;
+  border-radius:24px;
+  background:#fff;
+  border:1px solid var(--line);
+  box-shadow:var(--shadow);
+  text-align:center;
+}
+
+.loader{
+  width:58px;
+  height:58px;
+  border-radius:50%;
+  border:4px solid #dbeafe;
+  border-top-color:#1d4ed8;
+  animation:spin .8s linear infinite;
+  margin:0 auto 18px;
+}
+
+@keyframes spin{to{transform:rotate(360deg)}}
+
+.processing-card h3{
+  margin:0 0 8px;
+  font-size:22px;
+}
+
+.processing-card p{
+  margin:0 0 18px;
+  color:var(--muted);
+  font-size:14px;
+  line-height:1.8;
+}
+
+.step-row{
+  display:flex;
+  justify-content:center;
+  gap:10px;
+  flex-wrap:wrap;
+}
+
+.step{
+  padding:8px 12px;
+  border-radius:999px;
+  background:#f8fafc;
+  border:1px solid var(--line);
+  color:var(--muted);
+  font-size:12px;
+  font-weight:900;
+}
+
+.step.on{
+  color:#1d4ed8;
+  background:#eff6ff;
+  border-color:#bfdbfe;
+}
+
+.step.done{
+  color:#059669;
+  background:#ecfdf5;
+  border-color:#a7f3d0;
+}
+
+@media print{
+  body{background:#fff}
+  .hero,.left-panel,.toolbar,.footer-note,.toast-wrap,.processing{display:none!important}
+  .app{max-width:none;padding:0}
+  .shell{grid-template-columns:1fr}
+  .panel{box-shadow:none;border:none}
+  .output-shell{padding:0}
+  .report{box-shadow:none;border:none;border-radius:0}
+  .rpt-cover,.rpt-body{padding:24px}
+  .section,.mini-card,.block,.hero-card,.side-card,.table-wrap,details{break-inside:avoid}
+}
+</style>
+</head>
+
+<body>
+<div class="toast-wrap" id="toastWrap"></div>
+
+<div class="processing" id="processing">
+  <div class="processing-card">
+    <div class="loader"></div>
+    <h3>임원 보고용 회의록 생성 중</h3>
+    <p>자유 메모를 분석하여 핵심 요약, 결정 사항, 검토 포인트, 리스크 및 후속 조치를 자동 정리하고 있습니다.</p>
+    <div class="step-row">
+      <div class="step" id="step1">1. 입력 정리</div>
+      <div class="step" id="step2">2. 핵심 추출</div>
+      <div class="step" id="step3">3. 보고서 생성</div>
+    </div>
+  </div>
+</div>
+
+<div class="app">
+  <div class="hero">
+    <div class="hero-left">
+      <div class="hero-badge"><span class="dot"></span> EXECUTIVE MEETING NOTES AUTOMATION</div>
+      <h1>AI 활용 역량 강화 중급 과정 개발 프로젝트 — 회의록</h1>
+    </div>
+    <div class="hero-actions">
+      <button class="btn sub" id="btnLoadDraft" type="button">최근 초안 불러오기</button>
+      <button class="btn ghost" id="btnSampleTop" type="button">샘플 입력</button>
+    </div>
+  </div>
+
+  <div class="shell">
+    <div class="panel left-panel">
+      <div class="panel-head">
+        <div>
+          <h2>입력</h2>
+          <p>구조화되지 않은 메모를 그대로 입력해도 됩니다. 자동 분류와 문장 정리는 출력 시 수행됩니다.</p>
+        </div>
+      </div>
+
+      <div class="panel-body">
+        <div class="field">
+          <label for="meetingTitle">
+            <span>회의 제목</span>
+            <span class="hint">표지 제목</span>
+          </label>
+          <input class="input" id="meetingTitle" placeholder="예: 1차 킥오프 미팅 / 커리큘럼 구조 검토 회의" />
+        </div>
+
+        <div class="grid-2">
+          <div class="field">
+            <label for="meetingDate">
+              <span>회의 일시</span>
+              <span class="hint">자동 표기</span>
+            </label>
+            <input class="input" type="datetime-local" id="meetingDate" />
+          </div>
+          <div class="field">
+            <label for="meetingPlace">
+              <span>장소</span>
+              <span class="hint">온라인/오프라인</span>
+            </label>
+            <input class="input" id="meetingPlace" placeholder="예: Teams / 3층 회의실" />
+          </div>
+        </div>
+
+        <div class="grid-2">
+          <div class="field">
+            <label for="meetingWriter">
+              <span>작성자</span>
+              <span class="hint">선택 입력</span>
+            </label>
+            <input class="input" id="meetingWriter" placeholder="예: 김미진" />
+          </div>
+          <div class="field">
+            <label for="meetingTone">
+              <span>보고 톤</span>
+              <span class="hint">문장 정리 스타일</span>
+            </label>
+            <select class="select" id="meetingTone">
+              <option value="executive">임원 보고형</option>
+              <option value="official">공식형</option>
+              <option value="practical">실무형</option>
+              <option value="brief">초압축 요약형</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="field">
+          <label>
+            <span>참석자</span>
+            <span class="hint">칩 형태 입력</span>
+          </label>
+          <div class="attendee-row">
+            <input class="input" id="attendeeInput" placeholder="이름 입력 후 Enter" />
+            <button class="btn soft" id="btnAddAttendee" type="button">추가</button>
+          </div>
+          <div class="chips" id="attendeeChips"></div>
+        </div>
+
+        <div class="grid-2">
+          <div class="field">
+            <label for="nextMeetingDate">
+              <span>차기 회의 예정일</span>
+              <span class="hint">없으면 비워도 됨</span>
+            </label>
+            <input class="input" type="datetime-local" id="nextMeetingDate" />
+          </div>
+          <div class="field">
+            <label for="nextMeetingAgenda">
+              <span>차기 안건</span>
+              <span class="hint">없으면 자동 제안</span>
+            </label>
+            <input class="input" id="nextMeetingAgenda" placeholder="예: 템플릿 확정, 모듈별 담당 범위 확정" />
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="rawInput">
+            <span>자유 메모 입력</span>
+            <span class="hint">헤더 없어도 자동 분류</span>
+          </label>
+          <textarea class="textarea" id="rawInput" placeholder="[예시]
+오늘 이야기한 거 정리 안 된 상태로 그냥 적어도 됩니다.
+- 커리큘럼은 8회 정도가 적당해 보임
+- 환경셋업은 처음에 무조건 넣는 게 좋겠음
+- 실습 난이도 너무 높으면 안 됨
+- 파트 분배는 각자 2회차씩 맡는 방향
+- 템플릿은 markdown 기반이 협업에 더 유리해보임
+- 다만 모듈 간 중복 생길 수 있어서 검토 필요
+- 다음 회의 전에 각자 맡고 싶은 파트 우선순위 정리
+- 7/9 회의에서 구조 확정했으면 좋겠음
+- 강사 A가 다음 회의 리드
+- 기존 초급 교재는 드라이브에 공유 완료"></textarea>
+
+          <div class="tip-box">
+            <strong>입력 팁</strong>
+            <ul>
+              <li><strong>[안건] [논의] [결정] [할일] [기타]</strong> 형식을 써도 되고, 안 써도 됩니다.</li>
+              <li><strong>확정 / 합의 / 필요 / 검토 / 우려 / 준비 / 작성 / 공유</strong> 같은 단어가 있으면 자동 분류 정확도가 올라갑니다.</li>
+              <li><strong>전원: ~</strong> 또는 <strong>강사A: ~ (~7/9)</strong> 형태로 쓰면 후속 조치 표가 더 깔끔하게 생성됩니다.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="split">
+          <div class="toolbar">
+            <button class="btn primary" id="btnGenerate" type="button">출력용 보고서 생성</button>
+            <button class="btn sub" id="btnSample" type="button">샘플</button>
+            <button class="btn sub" id="btnReset" type="button">초기화</button>
+          </div>
+          <div class="toolbar">
+            <button class="btn ghost" id="btnSaveDraft" type="button">초안 저장</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel">
+      <div class="panel-head">
+        <div>
+          <h2>출력</h2>
+          <p>생성 즉시 인쇄 / PDF / 복사 가능한 임원 보고형 회의록이 표시됩니다.</p>
+        </div>
+        <div class="toolbar">
+          <button class="btn sub" id="btnCopySummary" type="button">요약 복사</button>
+          <button class="btn sub" id="btnCopyHTML" type="button">HTML 복사</button>
+          <button class="btn primary" id="btnPrint" type="button">인쇄 / PDF</button>
+        </div>
+      </div>
+
+      <div class="output-shell">
+        <div id="reportMount" class="empty">
+          <div class="empty-inner">
+            <h3>아직 생성된 보고서가 없습니다</h3>
+            <p>
+              왼쪽에 자유롭게 메모한 뒤 <strong>출력용 보고서 생성</strong> 버튼을 누르면,
+              임원 보고용으로 정리된 회의 결과 장표가 여기에 표시됩니다.
+            </p>
+          </div>
+        </div>
+
+        <div class="footer-note">
+          <span>프로젝트명은 <strong>AI 활용 역량 강화 중급 과정 개발 프로젝트</strong>로 고정 반영됩니다.</span>
+          <span>최근 초안 및 최근 보고서는 브라우저에 자동 저장됩니다.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+const $ = (id) => document.getElementById(id);
+
+const STORAGE_DRAFT = "exec_minutes_draft_v6";
+const STORAGE_REPORT = "exec_minutes_report_v6";
+
+let attendees = [];
+let lastReport = null;
+
+function nowInputValue(){
+  const d = new Date();
+  const p = n => String(n).padStart(2,"0");
+  return `${d.getFullYear()}-${p(d.getMonth()+1)}-${p(d.getDate())}T${p(d.getHours())}:${p(d.getMinutes())}`;
+}
+
+function esc(value){
+  if(value == null) return "";
+  return String(value)
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;")
+    .replace(/'/g,"&#39;");
+}
+
+function formatDT(dt){
+  if(!dt) return "미정";
+  const d = new Date(dt);
+  if(isNaN(d.getTime())) return dt;
+  const days = ["일","월","화","수","목","금","토"];
+  const p = n => String(n).padStart(2,"0");
+  return `${d.getFullYear()}.${p(d.getMonth()+1)}.${p(d.getDate())} (${days[d.getDay()]}) ${p(d.getHours())}:${p(d.getMinutes())}`;
+}
+
+function todayStr(){
+  const d = new Date();
+  const p = n => String(n).padStart(2,"0");
+  return `${d.getFullYear()}.${p(d.getMonth()+1)}.${p(d.getDate())}`;
+}
+
+function showToast(msg,type="default"){
+  const wrap = $("toastWrap");
+  const el = document.createElement("div");
+  el.className = `toast ${type==="good"?"good":type==="warn"?"warn":type==="bad"?"bad":""}`;
+  el.textContent = msg;
+  wrap.appendChild(el);
+  setTimeout(()=>{
+    el.style.opacity = "0";
+    el.style.transform = "translateY(-6px)";
+    el.style.transition = ".2s ease";
+    setTimeout(()=>el.remove(),220);
+  },2400);
+}
+
+function normalizeForDedupe(s){
+  return String(s || "")
+    .replace(/\s+/g," ")
+    .replace(/[.,:;·•\-—()（）[\]【】]/g,"")
+    .trim()
+    .toLowerCase();
+}
+
+function uniq(arr){
+  const out = [];
+  const seen = new Set();
+  for(const item of arr){
+    const key = normalizeForDedupe(item);
+    if(!key || seen.has(key)) continue;
+    seen.add(key);
+    out.push(item);
+  }
+  return out;
+}
+
+function stripBullet(s){
+  return String(s || "").replace(/^\s*[-•·▪◦▸►→]+\s*/,"").trim();
+}
+
+function smartSplitText(raw){
+  const lines = raw
+    .replace(/\r/g,"")
+    .replace(/[•·▪◦▸►→]/g,"-")
+    .replace(/\t/g," ")
+    .split("\n")
+    .map(v=>v.trim())
+    .filter(Boolean);
+
+  const chunks = [];
+  for(let line of lines){
+    if(line.length > 180 && /[.;]|그리고|또한|다만|한편/.test(line)){
+      const sub = line
+        .replace(/([.;])/g,"$1\n")
+        .split("\n")
+        .map(v=>v.trim())
+        .filter(Boolean);
+      chunks.push(...sub);
+    }else{
+      chunks.push(line);
+    }
+  }
+  return chunks;
+}
+
+function renderAttendees(){
+  $("attendeeChips").innerHTML = attendees.map((name,idx)=>`
+    <span class="chip">
+      ${esc(name)}
+      <span class="remove" data-idx="${idx}">✕</span>
+    </span>
+  `).join("");
+
+  $("attendeeChips").querySelectorAll(".remove").forEach(btn=>{
+    btn.addEventListener("click",()=>{
+      const idx = Number(btn.dataset.idx);
+      attendees.splice(idx,1);
+      renderAttendees();
+      autosaveDraft();
+    });
+  });
+}
+
+function addAttendee(){
+  const input = $("attendeeInput");
+  const name = input.value.trim();
+  if(!name) return;
+  if(!attendees.includes(name)) attendees.push(name);
+  input.value = "";
+  renderAttendees();
+  autosaveDraft();
+}
+
+$("btnAddAttendee").addEventListener("click",addAttendee);
+$("attendeeInput").addEventListener("keydown",(e)=>{
+  if(e.key === "Enter"){
+    e.preventDefault();
+    addAttendee();
+  }
+});
+
+function getDraftData(){
+  return {
+    title:$("meetingTitle").value.trim(),
+    date:$("meetingDate").value,
+    place:$("meetingPlace").value.trim(),
+    writer:$("meetingWriter").value.trim(),
+    tone:$("meetingTone").value,
+    attendees:[...attendees],
+    nextDate:$("nextMeetingDate").value,
+    nextAgenda:$("nextMeetingAgenda").value.trim(),
+    raw:$("rawInput").value
+  };
+}
+
+function setDraftData(data){
+  if(!data) return;
+  $("meetingTitle").value = data.title || "";
+  $("meetingDate").value = data.date || nowInputValue();
+  $("meetingPlace").value = data.place || "";
+  $("meetingWriter").value = data.writer || "";
+  $("meetingTone").value = data.tone || "executive";
+  attendees = Array.isArray(data.attendees) ? [...data.attendees] : [];
+  renderAttendees();
+  $("nextMeetingDate").value = data.nextDate || "";
+  $("nextMeetingAgenda").value = data.nextAgenda || "";
+  $("rawInput").value = data.raw || "";
+}
+
+function autosaveDraft(){
+  localStorage.setItem(STORAGE_DRAFT,JSON.stringify(getDraftData()));
+}
+
+function loadDraft(){
+  try{
+    const data = JSON.parse(localStorage.getItem(STORAGE_DRAFT) || "null");
+    if(!data){
+      showToast("저장된 최근 초안이 없습니다.","warn");
+      return;
+    }
+    setDraftData(data);
+    showToast("최근 초안을 불러왔습니다.","good");
+  }catch(e){
+    showToast("초안 불러오기에 실패했습니다.","bad");
+  }
+}
+
+$("btnSaveDraft").addEventListener("click",()=>{
+  autosaveDraft();
+  showToast("초안 저장 완료","good");
+});
+
+$("btnLoadDraft").addEventListener("click",loadDraft);
+
+[
+  "meetingTitle","meetingDate","meetingPlace","meetingWriter",
+  "meetingTone","nextMeetingDate","nextMeetingAgenda","rawInput"
+].forEach(id=>$(id).addEventListener("input",autosaveDraft));
+
+function refineSentence(text,tone="executive"){
+  let s = String(text || "").trim();
+  if(!s) return "";
+
+  s = stripBullet(s)
+    .replace(/\s+/g," ")
+    .replace(/그냥\s*/g,"")
+    .replace(/약간\s*/g,"")
+    .replace(/일단\s*/g,"")
+    .replace(/뭔가\s*/g,"")
+    .replace(/되게\s*/g,"")
+    .replace(/너무\s*/g,"과도하게 ")
+    .replace(/좀\s*/g,"")
+    .replace(/아무튼\s*/g,"")
+    .replace(/어쨌든\s*/g,"")
+    .replace(/했음/g,"하였음")
+    .replace(/할거임/g,"진행 예정")
+    .replace(/갈거임/g,"추진 예정")
+    .replace(/하자는 의견 많았음/g,"해당 방향에 대한 공감대가 형성됨")
+    .replace(/많았음/g,"다수 제기됨")
+    .replace(/많음/g,"다수 제기됨")
+    .replace(/넣어야한다고 함/g,"포함 필요성이 제기됨")
+    .replace(/넣어야 한다고 함/g,"포함 필요성이 제기됨")
+    .replace(/넣기로 함/g,"포함하기로 정리됨")
+    .replace(/정해야 됨/g,"확정 필요")
+    .replace(/해야 됨/g,"추가 검토 필요")
+    .replace(/해야됨/g,"추가 검토 필요")
+    .replace(/하지 말자/g,"지양하는 방향이 적절함")
+    .replace(/공유함/g,"공유 완료")
+    .replace(/공유했음/g,"공유 완료")
+    .replace(/확정하기로/g,"확정 예정으로 정리됨")
+    .replace(/얘기함/g,"논의함")
+    .replace(/얘기했음/g,"논의하였음")
+    .replace(/얘기/g,"논의")
+    .replace(/니까/g,"므로")
+    .replace(/니깐/g,"므로")
+    .replace(/해서/g,"하여")
+    .replace(/같음/g,"것으로 판단됨")
+    .replace(/보임/g,"것으로 판단됨");
+
+  s = s.replace(/^\[(안건|논의|결정|할일|할 일|기타|메모|참고|리스크|검토)\]\s*/i,"").trim();
+
+  if(tone === "executive"){
+    s = s
+      .replace(/로 가자/g,"방향으로 정리함")
+      .replace(/로 가는 방향/g,"방향으로 검토함")
+      .replace(/로 진행/g,"로 진행함")
+      .replace(/로 정리/g,"로 정리함");
+  }else if(tone === "official"){
+    s = s
+      .replace(/로 진행/g,"로 진행함")
+      .replace(/로 정리/g,"로 정리함");
+  }else if(tone === "brief"){
+    s = s
+      .replace(/필요성이 제기됨/g,"필요")
+      .replace(/방향으로 정리함/g,"방향")
+      .replace(/추가 검토 필요/g,"검토 필요");
+  }
+
+  s = s.replace(/\s{2,}/g," ").trim();
+  return s ? s.charAt(0).toUpperCase() + s.slice(1) : "";
+}
+
+const headingMap = [
+  {keys:["[안건]","[agenda]","[아젠다]"],type:"agenda"},
+  {keys:["[논의]","[discussion]","[논의내용]"],type:"discussion"},
+  {keys:["[결정]","[결정사항]","[decision]"],type:"decision"},
+  {keys:["[할일]","[할 일]","[액션]","[action]","[todo]"],type:"action"},
+  {keys:["[리스크]","[risk]","[이슈]"],type:"risk"},
+  {keys:["[검토]","[검토사항]","[지원필요]","[보고포인트]"],type:"review"},
+  {keys:["[기타]","[참고]","[메모]","[비고]"],type:"misc"}
+];
+
+function detectHeading(line){
+  const lower = line.toLowerCase();
+  for(const group of headingMap){
+    for(const key of group.keys){
+      if(lower.startsWith(key.toLowerCase())) return group.type;
+    }
+  }
+  return null;
+}
+
+function looksLikeAction(line){
+  return /.+[:：].+/.test(line) ||
+    /(준비|작성|정리|확인|공유|제출|전달|수정|검토|취합|리드|확정|반영|업데이트|배포|정리해오기|준비해오기)/.test(line);
+}
+
+function looksLikeDecision(line){
+  return /(확정|결정|합의|정리됨|정리함|유지|채택|반영하기로|진행하기로|추진하기로|고정)/.test(line);
+}
+
+function looksLikeReview(line){
+  return /(검토 필요|의견 필요|지원 필요|확인 필요|판단 필요|재논의 필요|조율 필요|승인 필요|추가 검토)/.test(line);
+}
+
+function looksLikeRisk(line){
+  return /(리스크|우려|이슈|문제|지연|변수|부담|충돌|과도|불명확|모호|중복|난이도|부족|누락)/.test(line);
+}
+
+function looksLikeAgenda(line){
+  return /(안건|논의 주제|범위|방향|운영 방식|파트 분배|일정|템플릿|교재 형태|구조|커리큘럼)/.test(line);
+}
+
+function inferOwner(line){
+  const m = line.match(/(전원|강사\s?[A-Z가-힣0-9]+|운영자|담당자|리드|작성자|각자|교육서비스센터)/);
+  return m ? m[1].trim() : "";
+}
+
+function extractDue(line){
+  const m = line.match(/(~\s*\d{1,2}\/\d{1,2}|\d{1,2}\/\d{1,2}|\d{1,2}\.\d{1,2}|차기 회의 전|다음 회의 전|금주 내|차주 내|이번 주|다음 주)/);
+  return m ? m[1].replace(/\s+/g," ") : "";
+}
+
+function inferPriority(line){
+  if(/(우선|긴급|즉시|필수|반드시|선행)/.test(line)) return "High";
+  if(/(검토|정리|준비|확인)/.test(line)) return "Medium";
+  return "Normal";
+}
+
+function parseAction(line,tone){
+  const raw = refineSentence(line,tone);
+  const assigneeFirst = raw.match(/^(.+?)\s*[:：]\s*(.+?)(?:\s*[\(（]\s*(.+?)\s*[\)）])?$/);
+
+  if(assigneeFirst){
+    return {
+      owner:assigneeFirst[1].trim(),
+      task:assigneeFirst[2].trim(),
+      due:assigneeFirst[3] ? assigneeFirst[3].trim() : "",
+      priority:inferPriority(raw)
+    };
+  }
+
+  return {
+    owner:inferOwner(raw),
+    task:raw,
+    due:extractDue(raw),
+    priority:inferPriority(raw)
+  };
+}
+
+function parseRaw(raw,tone){
+  const sections = {
+    agenda:[],
+    discussion:[],
+    decision:[],
+    action:[],
+    review:[],
+    risk:[],
+    misc:[]
+  };
+
+  const lines = smartSplitText(raw);
+  let current = null;
+
+  for(let line of lines){
+    const heading = detectHeading(line);
+    if(heading){
+      current = heading;
+      continue;
+    }
+
+    const clean = refineSentence(line,tone);
+    if(!clean) continue;
+
+    if(current){
+      sections[current].push(clean);
+      continue;
+    }
+
+    if(looksLikeDecision(clean)) sections.decision.push(clean);
+    else if(looksLikeReview(clean)) sections.review.push(clean);
+    else if(looksLikeRisk(clean)) sections.risk.push(clean);
+    else if(looksLikeAction(clean)) sections.action.push(clean);
+    else if(looksLikeAgenda(clean)) sections.agenda.push(clean);
+    else sections.discussion.push(clean);
+  }
+
+  if(!sections.agenda.length){
+    sections.agenda = uniq(sections.discussion.slice(0,4));
+  }
+
+  if(!sections.decision.length){
+    sections.decision = uniq(
+      sections.discussion
+        .filter(v=>/(방향|정리|적절|권장|유리|고정|포함|운영)/.test(v))
+        .slice(0,4)
+    );
+  }
+
+  if(!sections.review.length){
+    sections.review = uniq(
+      sections.discussion
+        .filter(v=>/(검토|확인|조율|추가|재논의|불명확|기준)/.test(v))
+        .slice(0,3)
+    );
+  }
+
+  if(!sections.risk.length){
+    sections.risk = uniq(
+      sections.discussion
+        .filter(v=>/(중복|난이도|지연|편차|부담|과도|변수)/.test(v))
+        .slice(0,3)
+    );
+  }
+
+  return {
+    agenda:uniq(sections.agenda),
+    discussion:uniq(sections.discussion),
+    decisions:uniq(sections.decision),
+    reviews:uniq(sections.review),
+    risks:uniq(sections.risk),
+    actions:uniq(sections.action).map(v=>parseAction(v,tone)),
+    misc:uniq(sections.misc)
+  };
+}
+function inferMeetingPurpose(meta, parsed){
+  if(meta.title){
+    return `${meta.title} 관련 주요 논의 사항을 정리하고, 과정 운영 방향 및 후속 조치 항목을 보고용으로 구조화함`;
+  }
+
+  const seed = parsed.agenda[0] || parsed.discussion[0] || "회의 주요 논의 사항";
+  return `${seed} 중심으로 논의하였으며, 주요 결정 사항 및 후속 조치 관점으로 재정리함`;
+}
+
+function createSummary(meta, parsed, tone){
+  const purpose = inferMeetingPurpose(meta, parsed);
+
+  let oneLiner = "";
+  if(tone === "brief"){
+    oneLiner = `${(parsed.decisions[0] || parsed.discussion[0] || "핵심 논의 사항").replace(/\.$/, "")} 중심으로 정리됨`;
+  }else{
+    oneLiner = `금번 회의에서는 ${meta.title || "주요 안건"} 중심으로 논의하였으며, ${
+      parsed.decisions.length
+        ? "운영 방향과 구조에 대한 주요 결론이 도출됨"
+        : "후속 검토 및 정리가 필요한 항목이 확인됨"
+    }`;
+  }
+
+  const keyPoints = uniq([
+    ...parsed.decisions.slice(0,3),
+    ...parsed.discussion.filter(v=>/(방향|적절|유리|필요|권장|구성|운영)/.test(v)).slice(0,2)
+  ]).slice(0,4);
+
+  const reportPoints = uniq([
+    ...parsed.reviews.slice(0,3),
+    ...parsed.risks.slice(0,2)
+  ]).slice(0,4);
+
+  const nextFocus = meta.nextAgenda
+    ? refineSentence(meta.nextAgenda,tone)
+    : (parsed.actions[0]?.task || parsed.reviews[0] || "차기 회의 안건 추후 정리 필요");
+
+  return {
+    purpose,
+    oneLiner,
+    keyPoints,
+    reportPoints,
+    nextFocus
+  };
+}
+
+function buildSummaryText(meta, parsed, summary){
+  const lines = [];
+
+  lines.push(`[회의명] ${meta.title || "회의록"}`);
+  lines.push(`[일시] ${formatDT(meta.date)}`);
+  lines.push(`[장소] ${meta.place || "미정"}`);
+
+  if(meta.attendees?.length){
+    lines.push(`[참석] ${meta.attendees.join(", ")}`);
+  }
+
+  lines.push("");
+  lines.push("[핵심 요약]");
+  lines.push(summary.oneLiner);
+
+  lines.push("");
+  lines.push("[주요 결정 사항]");
+  (parsed.decisions.slice(0,5).length ? parsed.decisions.slice(0,5) : ["주요 결정 사항 없음"])
+    .forEach(v=>lines.push(`- ${v}`));
+
+  lines.push("");
+  lines.push("[검토 필요 사항]");
+  (parsed.reviews.slice(0,5).length ? parsed.reviews.slice(0,5) : ["추가 검토 포인트 없음"])
+    .forEach(v=>lines.push(`- ${v}`));
+
+  lines.push("");
+  lines.push("[리스크 / 쟁점]");
+  (parsed.risks.slice(0,5).length ? parsed.risks.slice(0,5) : ["별도 리스크 없음"])
+    .forEach(v=>lines.push(`- ${v}`));
+
+  lines.push("");
+  lines.push("[후속 조치]");
+  (parsed.actions.length ? parsed.actions.slice(0,6) : [{owner:"",task:"추가 후속 조치 없음",due:""}])
+    .forEach(v=>{
+      lines.push(`- ${[v.owner, v.task, v.due].filter(Boolean).join(" / ")}`);
+    });
+
+  return lines.join("\n");
+}
+
+function signalBlock(title,text,type){
+  return `
+    <div class="signal ${type}">
+      <div class="title">${esc(title)}</div>
+      <div class="text">${esc(text || "해당 사항 없음")}</div>
+    </div>
+  `;
+}
+
+function listSection(items,emptyText){
+  if(!items.length){
+    return `<div class="signal-list">${signalBlock("NO DATA",emptyText,"warn")}</div>`;
+  }
+
+  return `
+    <ul class="list">
+      ${items.map((item,i)=>`
+        <li class="list-item">
+          <div class="list-no">${i+1}</div>
+          <div class="list-body">${esc(item)}</div>
+        </li>
+      `).join("")}
+    </ul>
+  `;
+}
+
+function priorityPill(priority){
+  if(priority === "High") return `<span class="pill red">High</span>`;
+  if(priority === "Medium") return `<span class="pill amber">Medium</span>`;
+  return `<span class="pill gray">Normal</span>`;
+}
+
+function inferActionTypePill(task){
+  const t = task || "";
+
+  if(/(교재|템플릿|문서|markdown|ppt|구성안|초안|자료)/i.test(t)){
+    return `<span class="pill blue">교재/문서</span>`;
+  }
+
+  if(/(일정|미팅|회의|리드|운영|진행|차기)/i.test(t)){
+    return `<span class="pill purple">운영/일정</span>`;
+  }
+
+  if(/(검토|확인|조율|합의|정렬|판단)/i.test(t)){
+    return `<span class="pill amber">검토/정렬</span>`;
+  }
+
+  if(/(공유|배포|전달|업데이트|공지)/i.test(t)){
+    return `<span class="pill green">공유/배포</span>`;
+  }
+
+  return `<span class="pill gray">일반</span>`;
+}
+
+function buildReportHTML(meta,parsed,summary){
+  const attendeesText = meta.attendees.length ? meta.attendees.join(", ") : "미기재";
+  const nextAgendaText = meta.nextAgenda
+    ? refineSentence(meta.nextAgenda,meta.tone)
+    : summary.nextFocus;
+
+  return `
+    <article class="report" id="reportRoot">
+      <section class="rpt-cover">
+        <div class="rpt-badge">EXECUTIVE REPORT · 회의록</div>
+
+        <h1 class="rpt-title">${esc(meta.title || "회의 결과 보고")}</h1>
+
+        <p class="rpt-sub">
+          AI 활용 역량 강화 중급 과정 개발 프로젝트 관련 회의 내용을 바탕으로 자동 정리한 보고용 회의록입니다.
+          자유 메모 입력을 기반으로 핵심 결론, 검토 포인트, 리스크 및 후속 조치를 재구성했습니다.
+        </p>
+
+        <div class="meta-grid">
+          <div class="meta-card">
+            <div class="meta-label">Date & Time</div>
+            <div class="meta-value">${esc(formatDT(meta.date))}</div>
+          </div>
+          <div class="meta-card">
+            <div class="meta-label">Location</div>
+            <div class="meta-value">${esc(meta.place || "미정")}</div>
+          </div>
+          <div class="meta-card">
+            <div class="meta-label">Participants</div>
+            <div class="meta-value">${esc(attendeesText)}</div>
+          </div>
+          <div class="meta-card">
+            <div class="meta-label">Writer</div>
+            <div class="meta-value">${esc(meta.writer || "미기재")}</div>
+          </div>
+        </div>
+      </section>
+
+      <div class="rpt-body">
+        <section class="summary-grid">
+          <div class="hero-card">
+            <div class="hero-eyebrow">EXECUTIVE SUMMARY</div>
+            <h2 class="hero-title">${esc(summary.oneLiner)}</h2>
+            <p class="hero-desc">${esc(summary.purpose)}</p>
+          </div>
+
+          <div class="side-stack">
+            <div class="side-card">
+              <h4>차기 회의 초점</h4>
+              <div class="signal-list">
+                ${signalBlock("NEXT FOCUS",nextAgendaText,"good")}
+              </div>
+            </div>
+
+            <div class="side-card">
+              <h4>자동 분석 메모</h4>
+              <div class="signal-list">
+                ${
+                  parsed.reviews.length
+                    ? signalBlock("REPORT NOTE","검토 필요 항목이 확인되었으며, 차기 회의 전 정렬 또는 판단이 필요한 상태로 해석됨","warn")
+                    : signalBlock("REPORT NOTE","즉시 검토가 필요한 항목은 제한적이며, 결정 사항 중심 관리가 가능한 상태로 해석됨","good")
+                }
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="metric-grid">
+          <div class="mini-card">
+            <div class="mini-label">주요 안건</div>
+            <div class="mini-value">${parsed.agenda.length}</div>
+            <div class="mini-sub">회의에서 식별된 핵심 논의 주제 수</div>
+          </div>
+
+          <div class="mini-card">
+            <div class="mini-label">결정 사항</div>
+            <div class="mini-value">${parsed.decisions.length}</div>
+            <div class="mini-sub">금번 회의 기준 확정 또는 정리된 항목 수</div>
+          </div>
+
+          <div class="mini-card">
+            <div class="mini-label">검토 포인트</div>
+            <div class="mini-value">${parsed.reviews.length}</div>
+            <div class="mini-sub">추가 검토 또는 정합성 확인이 필요한 항목 수</div>
+          </div>
+
+          <div class="mini-card">
+            <div class="mini-label">후속 조치</div>
+            <div class="mini-value">${parsed.actions.length}</div>
+            <div class="mini-sub">담당/기한 관리가 필요한 Action Item 수</div>
+          </div>
+        </section>
+
+        <section class="section">
+          <div class="section-head">
+            <h3>1. 핵심 요약</h3>
+            <span class="badge">Summary</span>
+          </div>
+
+          <div class="columns">
+            <div class="block">
+              <div class="signal-list">
+                ${
+                  summary.keyPoints.length
+                    ? summary.keyPoints.map(v=>signalBlock("KEY POINT",v,"good")).join("")
+                    : signalBlock("KEY POINT","핵심 요약 항목 없음","warn")
+                }
+              </div>
+            </div>
+
+            <div class="block">
+              <div class="signal-list">
+                ${
+                  summary.reportPoints.length
+                    ? summary.reportPoints.map(v=>signalBlock("REPORT POINT",v,/(리스크|우려|중복|난이도|지연|문제)/.test(v) ? "risk" : "warn")).join("")
+                    : signalBlock("REPORT POINT","별도 보고 포인트 없음","good")
+                }
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="section">
+          <div class="section-head">
+            <h3>2. 주요 안건</h3>
+            <span class="badge">${parsed.agenda.length} items</span>
+          </div>
+          <div class="block">
+            ${listSection(parsed.agenda,"입력 내용에서 별도 안건이 명시되지 않아 논의 내용을 기준으로 자동 추출함")}
+          </div>
+        </section>
+
+        <section class="section">
+          <div class="section-head">
+            <h3>3. 주요 결정 사항</h3>
+            <span class="badge">${parsed.decisions.length} items</span>
+          </div>
+          <div class="block">
+            ${listSection(parsed.decisions,"명시적 결정 문장이 부족하여 추후 확정이 필요한 상태로 판단됨")}
+          </div>
+        </section>
+
+        <section class="section">
+          <div class="section-head">
+            <h3>4. 검토 필요 사항</h3>
+            <span class="badge">${parsed.reviews.length} items</span>
+          </div>
+          <div class="block">
+            <div class="signal-list">
+              ${
+                parsed.reviews.length
+                  ? parsed.reviews.map(v=>signalBlock("REVIEW",v,"warn")).join("")
+                  : signalBlock("REVIEW","즉시 검토가 필요한 별도 항목은 식별되지 않음","good")
+              }
+            </div>
+          </div>
+        </section>
+
+        <section class="section">
+          <div class="section-head">
+            <h3>5. 리스크 / 쟁점</h3>
+            <span class="badge">${parsed.risks.length} items</span>
+          </div>
+          <div class="block">
+            <div class="signal-list">
+              ${
+                parsed.risks.length
+                  ? parsed.risks.map(v=>signalBlock("RISK",v,"risk")).join("")
+                  : signalBlock("RISK","현 시점에서 별도 리스크는 제한적이며, 진행 과정 중 재점검이 적절함","good")
+              }
+            </div>
+          </div>
+        </section>
+
+        <section class="section">
+          <div class="section-head">
+            <h3>6. 후속 조치 (Action Items)</h3>
+            <span class="badge">${parsed.actions.length} items</span>
+          </div>
+
+          <div class="table-wrap">
+            <table class="exec-table">
+              <thead>
+                <tr>
+                  <th style="width:60px;">No.</th>
+                  <th style="width:160px;">구분</th>
+                  <th style="width:160px;">담당</th>
+                  <th>후속 조치</th>
+                  <th style="width:130px;">완료 기한</th>
+                  <th style="width:110px;">우선순위</th>
+                  <th style="width:120px;">상태</th>
+                </tr>
+              </thead>
+
+              <tbody>
+                ${
+                  parsed.actions.length
+                    ? parsed.actions.map((a,i)=>`
+                      <tr>
+                        <td><strong style="color:#1d4ed8">${i+1}</strong></td>
+                        <td>${inferActionTypePill(a.task)}</td>
+                        <td>${a.owner ? `<span class="pill blue">${esc(a.owner)}</span>` : `<span style="color:#94a3b8">—</span>`}</td>
+                        <td style="font-weight:700">${esc(a.task)}</td>
+                        <td>${a.due ? `<span class="pill amber">${esc(a.due)}</span>` : `<span style="color:#94a3b8">—</span>`}</td>
+                        <td>${priorityPill(a.priority)}</td>
+                        <td><span class="pill gray">진행 전</span></td>
+                      </tr>
+                    `).join("")
+                    : `
+                      <tr>
+                        <td>1</td>
+                        <td>${inferActionTypePill("추가 조치 없음")}</td>
+                        <td><span style="color:#94a3b8">—</span></td>
+                        <td style="font-weight:700">후속 조치 항목이 별도로 식별되지 않음</td>
+                        <td><span style="color:#94a3b8">—</span></td>
+                        <td>${priorityPill("Normal")}</td>
+                        <td><span class="pill gray">완료</span></td>
+                      </tr>
+                    `
+                }
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <section class="section">
+          <div class="section-head">
+            <h3>7. 차기 일정 및 안건</h3>
+            <span class="badge">Next</span>
+          </div>
+
+          <div class="next-grid">
+            <div class="block">
+              <div class="signal-list">
+                ${signalBlock("NEXT MEETING",meta.nextDate ? formatDT(meta.nextDate) : "차기 회의 일정 미정","good")}
+              </div>
+            </div>
+
+            <div class="block">
+              <div class="signal-list">
+                ${signalBlock("AGENDA",nextAgendaText || "차기 안건 추후 확정 필요","warn")}
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="section">
+          <div class="section-head">
+            <h3>8. 상세 논의</h3>
+            <span class="badge">${parsed.discussion.length} items</span>
+          </div>
+
+          <details>
+            <summary>
+              <span>상세 논의 펼치기</span>
+              <span style="color:#64748b">클릭하여 확인</span>
+            </summary>
+            <div class="details-body">${
+              esc(
+                parsed.discussion.length
+                  ? parsed.discussion.map((v,i)=>`${i+1}. ${v}`).join("\n")
+                  : "별도 상세 논의 없음"
+              )
+            }</div>
+          </details>
+        </section>
+
+        <section class="section">
+          <div class="section-head">
+            <h3>9. 원문 메모</h3>
+            <span class="badge">Appendix</span>
+          </div>
+
+          <details>
+            <summary>
+              <span>입력 원문 보기</span>
+              <span style="color:#64748b">원문 백업</span>
+            </summary>
+            <div class="details-body">${esc(meta.raw || "")}</div>
+          </details>
+        </section>
+
+        <div class="footer-note" style="margin-top:18px">
+          <span>작성일: ${todayStr()}</span>
+          <span>본 문서는 자유 입력 메모를 기반으로 자동 정리된 보고형 회의록입니다.</span>
+        </div>
+      </div>
+    </article>
+  `;
+}
+
+function getMeta(){
+  return {
+    title:$("meetingTitle").value.trim() || "회의 결과 보고",
+    date:$("meetingDate").value,
+    place:$("meetingPlace").value.trim(),
+    writer:$("meetingWriter").value.trim(),
+    tone:$("meetingTone").value,
+    attendees:[...attendees],
+    nextDate:$("nextMeetingDate").value,
+    nextAgenda:$("nextMeetingAgenda").value.trim(),
+    raw:$("rawInput").value.trim()
+  };
+}
+
+function saveLastReport(reportData){
+  localStorage.setItem(STORAGE_REPORT,JSON.stringify(reportData));
+}
+
+function loadLastReport(){
+  try{
+    const data = JSON.parse(localStorage.getItem(STORAGE_REPORT) || "null");
+    if(!data || !data.html) return;
+
+    const mount = $("reportMount");
+    mount.className = "";
+    mount.innerHTML = data.html;
+    lastReport = data;
+  }catch(e){}
+}
+
+function setProcessingStep(step){
+  ["step1","step2","step3"].forEach((id,idx)=>{
+    const el = $(id);
+    el.classList.remove("on","done");
+
+    if(idx + 1 < step) el.classList.add("done");
+    else if(idx + 1 === step) el.classList.add("on");
+  });
+}
+
+function generateReport(){
+  const meta = getMeta();
+
+  if(!meta.raw){
+    showToast("회의 메모를 입력해주세요.","bad");
+    return;
+  }
+
+  $("processing").classList.add("show");
+  setProcessingStep(1);
+
+  setTimeout(()=>{
+    setProcessingStep(2);
+
+    const parsed = parseRaw(meta.raw,meta.tone);
+    const summary = createSummary(meta,parsed,meta.tone);
+
+    setTimeout(()=>{
+      setProcessingStep(3);
+
+      const html = buildReportHTML(meta,parsed,summary);
+      const mount = $("reportMount");
+
+      mount.className = "";
+      mount.innerHTML = html;
+
+      lastReport = {
+        meta,
+        parsed,
+        summary,
+        html,
+        summaryText:buildSummaryText(meta,parsed,summary),
+        savedAt:new Date().toISOString()
+      };
+
+      saveLastReport(lastReport);
+      autosaveDraft();
+
+      setTimeout(()=>{
+        $("processing").classList.remove("show");
+        showToast("임원 보고용 회의록 생성 완료","good");
+      },250);
+    },380);
+  },320);
+}
+
+$("btnGenerate").addEventListener("click",generateReport);
+
+$("btnPrint").addEventListener("click",()=>{
+  if(!lastReport && !$("reportMount").querySelector(".report")){
+    showToast("먼저 보고서를 생성해주세요.","warn");
+    return;
+  }
+  window.print();
+});
+
+$("btnCopySummary").addEventListener("click",async()=>{
+  if(!lastReport){
+    showToast("먼저 보고서를 생성해주세요.","warn");
+    return;
+  }
+
+  try{
+    await navigator.clipboard.writeText(lastReport.summaryText);
+    showToast("요약 복사 완료","good");
+  }catch(e){
+    showToast("복사에 실패했습니다.","bad");
+  }
+});
+
+$("btnCopyHTML").addEventListener("click",async()=>{
+  const html = $("reportMount").innerHTML.trim();
+
+  if(!html){
+    showToast("먼저 보고서를 생성해주세요.","warn");
+    return;
+  }
+
+  try{
+    await navigator.clipboard.writeText(html);
+    showToast("HTML 복사 완료","good");
+  }catch(e){
+    showToast("복사에 실패했습니다.","bad");
+  }
+});
+
+function resetForm(){
+  $("meetingTitle").value = "";
+  $("meetingDate").value = nowInputValue();
+  $("meetingPlace").value = "";
+  $("meetingWriter").value = "";
+  $("meetingTone").value = "executive";
+  $("nextMeetingDate").value = "";
+  $("nextMeetingAgenda").value = "";
+  $("rawInput").value = "";
+  $("attendeeInput").value = "";
+
+  attendees = [];
+  renderAttendees();
+  autosaveDraft();
+
+  showToast("초기화 완료","good");
+}
+
+function loadSample(){
+  $("meetingTitle").value = "중급 과정 개발 킥오프 회의";
+  $("meetingDate").value = nowInputValue();
+  $("meetingPlace").value = "마곡 / Teams 병행";
+  $("meetingWriter").value = "김미진";
+  $("meetingTone").value = "executive";
+  $("nextMeetingDate").value = "";
+  $("nextMeetingAgenda").value = "모듈별 담당 범위 확정, 교재 템플릿 최종 정리";
+
+  attendees = ["강사 A","강사 B","강사 C","강사 D"];
+  renderAttendees();
+
+  $("rawInput").value = `[안건]
+- 커리큘럼 전체 구조와 회차 구성 검토
+- 교재 템플릿 방향 정리
+- 파트 분배 기준 논의
+- 실습 난이도와 학습자 편차 고려 필요
+
+[논의]
+- 8회 x 4시간 구성이 적절해 보임
+- 환경셋업은 초반에 넣는 방향이 좋겠음
+- Copilot 기반 실습을 중심에 두되, 비개발자도 따라올 수 있는 수준으로 조정 필요
+- 교재는 PPT보다 문서형 템플릿이 협업과 수정에 유리해 보임
+- 다만 모듈 간 내용 중복이 생길 수 있어서 구조 검토 필요
+- 실습 난이도가 과도하게 높으면 교육생 이탈 우려 있음
+- 각 강사가 본인 담당 파트를 직접 강의하는 방향이 자연스러움
+
+[결정]
+- 4H x 8회, 총 32H 구성 방향으로 정리
+- 환경 셋업 및 Copilot 기본 사용법은 초반 모듈에 포함
+- 강사별 담당 파트는 차기 회의에서 확정
+- 교재 템플릿은 문서형 기준으로 우선 검토
+
+[할일]
+- 전원: 희망 담당 파트 1~2순위 정리 (~7/8)
+- 전원: 기존 초급 교재에서 활용 가능한 부분 표시
+- 강사 A: 차기 회의 안건 정리
+- 김미진: 교재 템플릿 초안 정리 (~7/9)
+
+[기타]
+- 기존 초급 교재는 드라이브에 공유 완료
+- 강의 운영 일정은 별도 확인 필요`;
+
+  autosaveDraft();
+  showToast("샘플 입력 완료","good");
+}
+
+$("btnReset").addEventListener("click",()=>{
+  if(confirm("입력 내용을 초기화할까요?")){
+    resetForm();
+  }
+});
+
+$("btnSample").addEventListener("click",loadSample);
+$("btnSampleTop").addEventListener("click",loadSample);
+
+(function init(){
+  $("meetingDate").value = nowInputValue();
+
+  try{
+    const savedDraft = JSON.parse(localStorage.getItem(STORAGE_DRAFT) || "null");
+    if(savedDraft){
+      setDraftData(savedDraft);
+    }
+  }catch(e){}
+
+  loadLastReport();
+})();
+</script>
+</body>
+</html>
+  
